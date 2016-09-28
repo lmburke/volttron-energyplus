@@ -1,0 +1,19 @@
+{													# Example configuration for ShadeControlAgent interacting with EnergyPlusAgent
+    "inputs" : {									# Inputs to the agent
+    	"outdoorDryBulb" : {						# Variable identifier used within the agent
+    		"topic" : "building/weatherstation",	# Topic to which to listen for input
+    		"field" : "outdoorDryBulbTemperature"	# Key in the message; this is also the point name
+    	},											#
+    	"incidentRadiation" : {						# Variable identifier used within the agent
+    		"topic" : "building/weatherstation",	# Topic to which to listen for input
+    		"field" : "surfaceIncidentRadiation"	# Key in the message; this is also the point name
+    	}											#
+    },												#
+    "outputs" : {									# Outputs of the agent
+    	"shadeSchedule" : {							# Variable identifier used within the agent
+    		"topic" : "building/windowshades",		# Topic on which to publish output
+    		"field" : "schedule",					# Key in the message; this is also the point name
+    		"target" : "platform.actuator"			# Target of the RPC call
+    	}											#
+    }												#
+}													#

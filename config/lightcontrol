@@ -1,0 +1,15 @@
+{																# Example configuration for LightControlAgent interacting with EnergyPlusAgent
+    "inputs" : {												# Inputs to the agent
+    	"horizontalRadiation" : {								# Variable identifier used within the agent
+    		"topic" : "building/weatherstation",				# Topic to which to listen for input
+    		"field" : "totalHorizontalRadiation"				# Key in the message; this is also the point name
+    	}														#
+    },															#
+    "outputs" : {												# Outputs of the agent
+    	"extLightSchedule" : {									# Variable identifier used within the agent
+    		"topic" : "building/exteriorlights",				# Topic on which to publish output
+    		"field" : "schedule",								# Key in the message; this is also the point name
+    		"meta" : {"units": "", "tz": "UTC", "type": "int"}	# Meta to be sent with this value
+    	}														#
+    }															#
+}																#

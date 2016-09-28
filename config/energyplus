@@ -1,0 +1,96 @@
+{																					# Example agent configuration for 1ZoneUncontrolled.idf
+	"properties" : {																# Properties of the agent
+		"identity" : "platform.actuator",											# Identity of the agent
+	    "model" : "eplus/1ZoneUncontrolled.idf",									# IDF model to simulate
+	    "weather" : "eplus/USA_CO_Golden-NREL.724666_TMY3.epw",						# Weather file used for simulation
+	    "bcvtb_home" : "bcvtb"														# Location of the BCVTB library included with the repo
+	    																			# Paths to the model, weather and BCVTB library can be relative
+	    																			#   (to the location where the agent is running), absolute, and/or 
+	    																			#   can use the user home shortcut(~).
+	},																				#
+    "inputs" : {																	# Inputs to the agent, each corresponding to a topic and point
+    	"shadeSchedule" : {															# Variable identifier used within the agent
+    																				# Corresponds to the EnergyPlus ExternalInterface input:
+    																				# ExternalInterface:Schedule,
+ 					   																# 	WindowShadeSch,
+    																				#   On/Off,
+    																				#   1.0;
+    		"name" : "WindowShadeSch",												# 'name' of the ExternalInterface object
+    		"type" : "schedule",													# 'type' of the ExternalInterface object
+    																				# 'type' can be 'schedule', 'actuator', or 'variable'
+    		"topic" : "building/windowshades",										# Topic to which to listen for EnergyPlus input
+    		"field" : "schedule"													# Key in the message; this is also the point name;
+    																				#   the value is sent to EnergyPlus
+    																				# If the actuator methods are used, then the full path to the
+    																				#   point would be building/windowshades/schedule 
+    	},																			#
+    	"extLightSchedule" : {														# Variable identifier used within the agent
+ 					   																# Corresponds to the EnergyPlus ExternalInterface input:
+																			    	# ExternalInterface:Schedule,
+																			    	#   ExtLightSch,
+																		    		#   On/Off,
+														    						#   1.0;
+    		"name" : "ExtLightSch",													# 'name' of the ExternalInterface object
+    		"type" : "schedule",													# 'type' of the ExternalInterface object
+    		"topic" : "building/exteriorlights",									# Topic to which to subscribe
+    		"field" : "schedule"													# Key in the message; this is also the point name;
+    																				#   the value is sent to EnergyPlus
+    																				# If the actuator methods are used, then the full path to the
+    																				#   point would be building/exteriorlights/schedule
+    	},																			#
+		"someInputVariable" : {														# Variable identifier used within the agent;
+																		    		#   an example of some other variable that your agent might want to use
+															    					#   since there is no 'name' or 'type', the agent will not try to send this to EnergyPlus
+    		"topic" : "building/sometopic",											# Topic to which to subscribe
+    		"field" : "someinput",													# Key in the message; this is also the point name;
+    																				#   the value is sent to EnergyPlus
+    		"blocking" : false														# Tells the agent that this variable does not have to be updated
+    																				#   in order for the simulation to advance
+    	}																			#
+    },																				#
+    "outputs" : {																	# Outputs of the agent, each corresponding to a topic and point
+    	"outdoorDryBulb" : {														# Variable identifier used within the agent
+																	    	    	# Corresponds to the IDF output:
+															    					# Output:Variable,
+																			    	#   ENVIRONMENT,
+																			    	#   Site Outdoor Air Drybulb Temperature,
+																			    	#   timestep;
+    		"name" : "ENVIRONMENT",													# 'name' is the EnergyPlus 'Variable Name'
+    		"type" : "Site Outdoor Air Drybulb Temperature",						# 'type' is the EnergyPlus 'Key Value'
+    		"topic" : "building/weatherstation",									# Topic on which the value will be published
+    		"field" : "outdoorDryBulbTemperature",									# Key in the message to be sent
+    		"meta" : {"units": "C", "tz": "UTC", "type": "float"}					# Meta to be sent with this value
+    	},																			#
+    	"incidentRadiation" : { 													# Variable identifier used within the agent
+																			    	# Corresponds to the IDF output:
+																			    	# Output:Variable,
+																			    	#   Zn001:Wall001:Win001,
+															   					 	#   Surface Outside Face Incident Solar Radiation Rate per Area,
+															    					#   timestep;
+    		"name" : "Zn001:Wall001:Win001",										# 'name' is the EnergyPlus 'Variable Name'
+    		"type" : "Surface Outside Face Incident Solar Radiation Rate per Area",	# 'type' is the EnergyPlus 'Key Value'
+    		"topic" : "building/weatherstation",									# Topic on which the value will be published
+    		"field" : "surfaceIncidentRadiation", 									# Key in the message to be sent
+    		"meta" : {"units": "W/m2", "tz": "UTC", "type": "float"}				# Meta to be sent with this value
+    	},																			#
+    	"horizontalRadiation" : {													# Variable identifier used within the agent
+															     					# Corresponds to the IDF output:
+															    					# Output:Variable,
+															    					#   ENVIRONMENT,
+															    					#   Site Diffuse Solar Radiation Rate per Area,
+															    					#   timestep;
+    		"name" : "ENVIRONMENT",													# 'name' is the EnergyPlus 'Variable Name'
+    		"type" : "Site Diffuse Solar Radiation Rate per Area",					# 'type' is the EnergyPlus 'Key Value'
+    		"topic" : "building/weatherstation",									# Topic to which the value will be published
+    		"field" : "totalHorizontalRadiation",									# Key in the message to be sent
+    		"meta" : {"units": "C", "tz": "UTC", "type": "float"}					# Meta to be sent with this value
+    	},																			#
+    	"someOutputVariable" : {													# Variable identifier used within the agent;
+							    	    											#   an example of some other variable that your agent might want to send;
+									    											#   since there is no 'name' or 'type', the agent will not try to read this value from EnergyPlus
+    		"topic" : "building/sometopic",											# Topic to which the value will be published
+    		"field" : "someoutput"													# Field in the message to be sent
+    																				# Meta will be empty
+    	}																			#
+    }																				#
+}																					#
