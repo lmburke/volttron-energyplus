@@ -63,8 +63,6 @@ $ . scripts/core/make-agent.sh
 View the log. The agent will indicate that it has started an EnergyPlus simulation.
 ~~~
 $ tail -f [logfilepath.log]
-~~~
-~~~
 ...
 2016-04-25 10:42:29,308 (energyplus-0.1 6990) pnnl.pubsubagent.pubsub.agent INFO: subscribed to test/extLightSchedule
 2016-04-25 10:42:29,308 (energyplus-0.1 6990) pnnl.pubsubagent.pubsub.agent INFO: subscribed to test/shadeSchedule
@@ -96,8 +94,6 @@ $ . scripts/core/make-agent.sh
 View the log. You will observe the agents log the messages sent back and forth during the EnergyPlus simulation.
 ~~~
 $ tail -f [logfilepath.log]
-~~~
-~~~
 ...
 2016-04-25 11:14:21,742 (energyplus-0.1 7468) pnnl.pubsubagent.pubsub.agent INFO: Sending: test/outdoorDryBulb 10.0
 2016-04-25 11:14:21,748 (shadecontrol-0.1 7367) pnnl.pubsubagent.pubsub.agent INFO: Received: test/outdoorDryBulb 10.0
