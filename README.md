@@ -1,12 +1,19 @@
 # README #
 
-The EnergyPlus agent is a VOLTTRON agent that enables co-simulation of EnergyPlus with VOLTTRON using EnergyPlus' built-in BCVTB interface. 
+The EnergyPlus agent is a VOLTTRON agent that enables co-simulation of EnergyPlus with VOLTTRON using EnergyPlus' built-in BCVTB interface. This README contains instructions for installing dependencies and running a simple co-simulation example.
 
-## INSTALLATION ##
+## DEPENDENCIES ##
 
 The following instructions assume you have already cloned this repository, and that you have already installed the [PubSub](https://github.com/VOLTTRON/volttron-pubsub) modules into the VOLTTRON environment's site-packages directory.
 
-Make sure you have installed [VOLTTRON](https://github.com/VOLTTRON/volttron) and its dependencies
+Make sure you have installed [VOLTTRON](https://github.com/VOLTTRON/volttron) and its dependencies.
+
+You must have an installation of EnergyPlus, preferably version 8.4 or higher. The EnergyPlus model included is in version 8.4 format. 
+
+EnergyPlus uses the [Building Control Virtual Test Bed](https://simulationresearch.lbl.gov/bcvtb) for socket communication. You do not need to install the BCVTB; the library is included in this repository. However, the BCVTB library does require Java.
+
+## INSTALLATION ##
+
 Enable the VOLTTRON virtual environment
 ~~~
 $ . [VOLTTRON repository location]/env/bin/activate
@@ -17,9 +24,9 @@ $ cd [volttron-energyplus repository location]
 $ python setup.py install
 ~~~
 
-## AGENT CONFIGURATION ##
+## AGENT CONFIGURATION FOR EXAMPLE ##
 
-EnergyPlus needs to know where to find the model and weather files used for simulation. You will need to edit the agent configuration file included in the [volttron-energyplus repository location]/config/ directory if you are running the agents from the command line. If running from your IDE, you may nor may not have to modify the paths depending on how the IDE is configured. Specifically, the following parameters need to be updated:
+EnergyPlus needs to know where to find the model and weather files used for simulation. You will need to edit the 'energyplus' configuration file included in the [volttron-energyplus repository location]/config/ directory if you are running the agents from the command line. If running from your IDE, you may nor may not have to modify the paths depending on how the IDE is configured. Specifically, the following parameters need to be updated:
 ~~~
 ...
 	"model" : "[volttron-energyplus repository location]/eplus/1ZoneUncontrolled.idf",
@@ -29,7 +36,7 @@ EnergyPlus needs to know where to find the model and weather files used for simu
 ~~~
 If you do not have the USA_CO_Golden-NREL.724666_TMY3.epw weather file, simply substitute for another.
 
-## PACKAGING AND RUNNING ##
+## PACKAGING AND RUNNING EXAMPLE ##
 
 Navigate to VOLTTRON source directory
 ~~~
