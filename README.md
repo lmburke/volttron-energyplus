@@ -4,7 +4,7 @@ The EnergyPlus agent is a VOLTTRON agent that enables co-simulation of EnergyPlu
 
 ## DEPENDENCIES ##
 
-The following instructions assume you have already cloned this repository, and that you have already installed the [PubSub](./volttron-pubsub) modules into the VOLTTRON environment's site-packages directory.
+The following instructions assume you have already cloned this repository, and that you have already installed the [PubSub](volttron-pubsub) modules into the VOLTTRON environment's site-packages directory.
 
 Make sure you have installed [VOLTTRON](https://github.com/VOLTTRON/volttron) and its dependencies.
 
