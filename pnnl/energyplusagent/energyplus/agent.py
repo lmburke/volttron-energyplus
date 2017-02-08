@@ -68,7 +68,7 @@ from gevent import monkey
 monkey.patch_socket()
 from volttron.platform.agent import utils
 from volttron.platform.vip.agent import Core, RPC
-from pnnl.platform.pubsub.agent import SynchronizingPubSubAgent
+from volttron.platform.pubsub.agent import SynchronizingPubSubAgent
 
 
 utils.setup_logging()
@@ -93,11 +93,11 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         self.flag = 0
         self.sent = None
         self.rcvd = None
-        self.socketServer = None
+        self.socket_server = None
         self.simulation = None
         self.step = None
-        self.ePlusInputs = 0
-        self.ePlusOutputs = 0
+        self.eplus_inputs = 0
+        self.eplus_outputs = 0
         if not self.config:
             self.exit('No configuration found.')
         self.cwd = os.getcwd()
@@ -111,69 +111,69 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
     @Core.receiver('onstart')
     def start(self, sender, **kwargs):
         self.subscribe()
-        self.clearLastUpdate()
-        self.startSocketServer()
-        self.startSimulation()
+        self.clear_last_update()
+        self.start_socket_server()
+        self.start_simulation()
 
 
-    def startSocketServer(self):
-        self.socketServer = self.SocketServer()
-        self.socketServer.onRecv = self.recvEnergyPlusMssg
-        self.socketServer.connect()
-        self.core.spawn(self.socketServer.start)    
+    def start_socket_server(self):
+        self.socket_server = self.SocketServer()
+        self.socket_server.on_recv = self.recv_eplus_msg
+        self.socket_server.connect()
+        self.core.spawn(self.socket_server.start)    
         
         
-    def startSimulation(self):
+    def start_simulation(self):
         if not self.model:
             self.exit('No model specified.')
         if not self.weather:
             self.exit('No weather specified.')
-        modelPath = self.model
-        if (modelPath[0] == '~'):
-            modelPath = os.path.expanduser(modelPath)
-        if (modelPath[0] != '/'):
-            modelPath = os.path.join(self.cwd,modelPath)
-        weatherPath = self.weather
-        if (weatherPath[0] == '~'):
-            weatherPath = os.path.expanduser(weatherPath)
-        if (weatherPath[0] != '/'):
-            weatherPath = os.path.join(self.cwd,weatherPath)
-        modelDir = os.path.dirname(modelPath)
-        bcvtbDir = self.bcvtb_home
-        if (bcvtbDir[0] == '~'):
-            bcvtbDir = os.path.expanduser(bcvtbDir)
-        if (bcvtbDir[0] != '/'):
-            bcvtbDir = os.path.join(self.cwd,bcvtbDir)
-        log.debug('Working in %r', modelDir)
-        self.writePortFile(os.path.join(modelDir,'socket.cfg'))
-        self.writeVariableFile(os.path.join(modelDir,'variables.cfg'))
-        if (self.version >= 8.4):
-            cmdStr = "cd %s; export BCVTB_HOME=%s; energyplus -w %s -r %s" % (modelDir, bcvtbDir, weatherPath, modelPath)
+        model_path = self.model
+        if model_path[0] == '~':
+            model_path = os.path.expanduser(model_path)
+        if model_path[0] != '/':
+            model_path = os.path.join(self.cwd,model_path)
+        weather_path = self.weather
+        if weather_path[0] == '~':
+            weather_path = os.path.expanduser(weather_path)
+        if weather_path[0] != '/':
+            weather_path = os.path.join(self.cwd,weather_path)
+        model_dir = os.path.dirname(model_path)
+        bcvtb_dir = self.bcvtb_home
+        if bcvtb_dir[0] == '~':
+            bcvtb_dir = os.path.expanduser(bcvtb_dir)
+        if bcvtb_dir[0] != '/':
+            bcvtb_dir = os.path.join(self.cwd,bcvtb_dir)
+        log.debug('Working in %r', model_dir)
+        self.write_port_file(os.path.join(model_dir,'socket.cfg'))
+        self.write_variable_file(os.path.join(model_dir,'variables.cfg'))
+        if self.version >= 8.4:
+            cmd_str = "cd %s; export BCVTB_HOME=%s; energyplus -w %s -r %s" % (model_dir, bcvtb_dir, weather_path, model_path)
         else:
-            cmdStr = "export BCVTB_HOME=%s; runenergyplus %s %s" % (bcvtbDir, modelPath, weatherPath)
-        log.debug('Running: %s', cmdStr)
-        self.simulation = subprocess.Popen(cmdStr, shell=True)
+            cmd_str = "export BCVTB_HOME=%s; runenergyplus %s %s" % (bcvtb_dir, model_path, weather_path)
+        log.debug('Running: %s', cmd_str)
+        self.simulation = subprocess.Popen(cmd_str, shell=True)
     
     
-    def sendEnergyPlusMssg(self):
-        if self.socketServer:
+    def send_eplus_msg(self):
+        if self.socket_server:
             args = self.input()
-            mssg = '%r %r %r 0 0 %r' % (self.vers, self.flag, self.ePlusInputs, self.time)
+            mssg = '%r %r %r 0 0 %r' % (self.vers, self.flag, self.eplus_inputs, self.time)
             for obj in args.itervalues():
                 if obj.get('name', None) and obj.get('type', None):
                     mssg = mssg + ' ' + str(obj.get('value'))
             self.sent = mssg+'\n'
             log.info('Sending message to EnergyPlus: ' + mssg)
-            self.socketServer.send(self.sent)
+            self.socket_server.send(self.sent)
 
 
-    def recvEnergyPlusMssg(self, mssg):
+    def recv_eplus_msg(self, mssg):
         self.rcvd = mssg
-        self.parseEnergyPlusMssg(mssg)
-        self.publishAllOutputs()
+        self.parse_eplus_msg(mssg)
+        self.publish_all_outputs()
 
 
-    def parseEnergyPlusMssg(self, mssg):
+    def parse_eplus_msg(self, mssg):
         mssg = mssg.rstrip()
         log.info('Received message from EnergyPlus: ' + mssg)
         arry = mssg.split()
@@ -189,10 +189,10 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                 self.exit('Simulation stopped with error during initialization: ' + flag)
             elif flag == '-20':
                 self.exit('Simulation stopped with error during time integration: ' + flag)
-            else:
-                self.exit('Simulation stopped with error code ' + flag)
-        elif ((arry[2] < self.ePlusOutputs) and (len(arry) < self.ePlusOutputs+6)):
-            self.exit('Got message with ' + arry[2] + ' inputs. Expecting ' + str(self.ePlusOutputs) + '.')
+#            else:
+#                self.exit('Simulation stopped with error code ' + flag)
+        elif ((arry[2] < self.eplus_outputs) and (len(arry) < self.eplus_outputs+6)):
+            self.exit('Got message with ' + arry[2] + ' inputs. Expecting ' + str(self.eplus_outputs) + '.')
         else:
             if float(arry[5]): 
                 self.time = float(arry[5])
@@ -208,39 +208,39 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
     def exit(self, mssg):
         self.stop()
         log.error(mssg)
-      
+             
 
     def stop(self):
-        if self.socketServer:
-            self.socketServer.stop()
-            self.socketServer = None
+        if self.socket_server:
+            self.socket_server.stop()
+            self.socket_server = None
             
 
-    def writePortFile(self, path):
+    def write_port_file(self, path):
         fh = open(path, "w+")
         fh.write('<?xml version="1.0" encoding="ISO-8859-1"?>\n')
         fh.write('<BCVTB-client>\n')
         fh.write('  <ipc>\n')
-        fh.write('    <socket port="%r" hostname="%s"/>\n' % (self.socketServer.port, self.socketServer.host))
+        fh.write('    <socket port="%r" hostname="%s"/>\n' % (self.socket_server.port, self.socket_server.host))
         fh.write('  </ipc>\n')
         fh.write('</BCVTB-client>')
         fh.close()
 
 
-    def writeVariableFile(self, path):
+    def write_variable_file(self, path):
         fh = open(path, "w+")
         fh.write('<?xml version="1.0" encoding="ISO-8859-1"?>\n')
         fh.write('<!DOCTYPE BCVTB-variables SYSTEM "variables.dtd">\n')
         fh.write('<BCVTB-variables>\n')
         for obj in self.output().itervalues():
             if obj.has_key('name') and obj.has_key('type'):
-                self.ePlusOutputs = self.ePlusOutputs + 1
+                self.eplus_outputs = self.eplus_outputs + 1
                 fh.write('  <variable source="EnergyPlus">\n')
                 fh.write('    <EnergyPlus name="%s" type="%s"/>\n' % (obj.get('name'), obj.get('type')))
                 fh.write('  </variable>\n')
         for obj in self.input().itervalues():
             if obj.has_key('name') and obj.has_key('type'):
-                self.ePlusInputs = self.ePlusInputs + 1
+                self.eplus_inputs = self.eplus_inputs + 1
                 fh.write('  <variable source="Ptolemy">\n')
                 fh.write('    <EnergyPlus %s="%s"/>\n' % (obj.get('type'), obj.get('name')))
                 fh.write('  </variable>\n')
@@ -313,7 +313,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         :rtype: any base python type
          
         """
-        obj = self.findBestMatch(topic)
+        obj = self.find_best_match(topic)
         if obj is not None: # we have an exact match to the  <device_name topic>/<point name>, so return the first value
             return obj.get('value', None)
         return None
@@ -340,7 +340,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         """
         topic = topic.strip('/')
         log.debug("Attempting to write "+topic+" with value: "+str(value))
-        result = self.updateTopicRpc(requester_id, topic, value)
+        result = self.update_topic_rpc(requester_id, topic, value)
         log.debug("Writing: {topic} : {value} {result}".format(topic=topic, value=value, result=result))
         if result==SUCCESS:
             return value;
@@ -363,11 +363,11 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         :type requester_id: str
          
         """
-        obj = self.findBestMatch(topic)
+        obj = self.find_best_match(topic)
         if obj and obj.has_key('default'):
             value = obj.get('default')
             log.debug("Reverting topic "+topic+" to "+str(value))
-            self.updateTopicRpc(requester_id, topic, value)
+            self.update_topic_rpc(requester_id, topic, value)
         else:
             log.warning("Unable to revert topic. No topic match or default defined!")
 
@@ -387,7 +387,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
          
         """
         device_name = device_name.strip('/')
-        objs = self.getInputsFromTopic(device_name) # we will assume that the topic is only the <device topic> and revert all matches at this level!
+        objs = self.get_inputs_from_topic(device_name) # we will assume that the topic is only the <device topic> and revert all matches at this level!
         if objs is not None:
             for obj in objs:
                 point_name = obj.get('field', None)
@@ -395,39 +395,39 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                 if obj.has_key('default'):
                     value = obj.get('default')
                     log.debug("Reverting "+topic+" to "+str(value))
-                    self.updateTopicRpc(requester_id, topic, value)
+                    self.update_topic_rpc(requester_id, topic, value)
                 else:
                     log.warning("Unable to revert "+topic+". No default defined!")
         
     
-    def updateTopicRpc(self, requester_id, topic, value):
-        obj = self.findBestMatch(topic)
+    def update_topic_rpc(self, requester_id, topic, value):
+        obj = self.find_best_match(topic)
         if obj is not None:
             obj['value'] = value
             obj['last_update'] = datetime.utcnow().isoformat(' ') + 'Z'
-            self.onUpdateTopicRpc(requester_id, topic, value)
+            self.on_update_topic_rpc(requester_id, topic, value)
             return SUCCESS
         return FAILURE
              
     def advance_simulation(self, peer, sender, bus, topic, headers, message):
-        log.debug('Advancing simulation.')
+        log.info('Advancing simulation.')
         for obj in self.input().itervalues():
-            log.debug('ADVANCE: {}'.format(obj))
+            log.info('ADVANCE: {}'.format(obj))
             if (obj.has_key('blocking') and obj.get('blocking')) or not obj.has_key('blocking'):
                 if obj.has_key('last_update'):
                     if obj.get('last_update') is None:
                         set_topic = obj['topic']  + '/' + obj['field']
                         value = obj['value'] if obj.has_key('value') else obj['default']
-                        self.updateTopicRpc('ahp', set_topic, value)
+                        self.update_topic_rpc('ahp', set_topic, value)
         return
                         
          
-    def onUpdateTopicRpc(self, requester_id, topic, value):
-        self.updateComplete()
+    def on_update_topic_rpc(self, requester_id, topic, value):
+        self.update_complete()
         
         
-    def onUpdateComplete(self):
-        self.sendEnergyPlusMssg()
+    def on_update_complete(self):
+        self.send_eplus_msg()
         
         
     class SocketServer():
@@ -443,7 +443,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
             self.port = None
         
         
-        def onRecv(self, mssg):
+        def on_recv(self, mssg):
             log.debug('Received %s' % mssg)
             
             
@@ -500,7 +500,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                 mssg = self.recv()
                 if mssg:
                     self.rcvd = mssg 
-                    self.onRecv(mssg)
+                    self.on_recv(mssg)
             
 
 def main(argv=sys.argv):
@@ -514,4 +514,3 @@ def main(argv=sys.argv):
 if __name__ == '__main__':
     # Entry point for script
     sys.exit(main())
-
