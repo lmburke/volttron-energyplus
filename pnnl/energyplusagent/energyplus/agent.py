@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*- {{{
 # vim: set fenc=utf-8 ft=python sw=4 ts=4 sts=4 et:
 
-# Copyright (c) 2015, Battelle Memorial Institute
+# Copyright (c) 2017, Battelle Memorial Institute
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -107,7 +107,6 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
     def setup(self, sender, **kwargs):
         super(EnergyPlusAgent, self).setup(sender, **kwargs)  
         
-        
     @Core.receiver('onstart')
     def start(self, sender, **kwargs):
         self.subscribe()
@@ -115,14 +114,12 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         self.start_socket_server()
         self.start_simulation()
 
-
     def start_socket_server(self):
         self.socket_server = self.SocketServer()
         self.socket_server.on_recv = self.recv_eplus_msg
         self.socket_server.connect()
         self.core.spawn(self.socket_server.start)    
-        
-        
+
     def start_simulation(self):
         if not self.model:
             self.exit('No model specified.')
@@ -153,30 +150,27 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
             cmd_str = "export BCVTB_HOME=%s; runenergyplus %s %s" % (bcvtb_dir, model_path, weather_path)
         log.debug('Running: %s', cmd_str)
         self.simulation = subprocess.Popen(cmd_str, shell=True)
-    
-    
+
     def send_eplus_msg(self):
         if self.socket_server:
             args = self.input()
-            mssg = '%r %r %r 0 0 %r' % (self.vers, self.flag, self.eplus_inputs, self.time)
+            msg = '%r %r %r 0 0 %r' % (self.vers, self.flag, self.eplus_inputs, self.time)
             for obj in args.itervalues():
                 if obj.get('name', None) and obj.get('type', None):
-                    mssg = mssg + ' ' + str(obj.get('value'))
-            self.sent = mssg+'\n'
-            log.info('Sending message to EnergyPlus: ' + mssg)
+                    msg = msg + ' ' + str(obj.get('value'))
+            self.sent = msg + '\n'
+            log.info('Sending message to EnergyPlus: ' + msg)
             self.socket_server.send(self.sent)
 
-
-    def recv_eplus_msg(self, mssg):
-        self.rcvd = mssg
-        self.parse_eplus_msg(mssg)
+    def recv_eplus_msg(self, msg):
+        self.rcvd = msg
+        self.parse_eplus_msg(msg)
         self.publish_all_outputs()
 
-
-    def parse_eplus_msg(self, mssg):
-        mssg = mssg.rstrip()
-        log.info('Received message from EnergyPlus: ' + mssg)
-        arry = mssg.split()
+    def parse_eplus_msg(self, msg):
+        msg = msg.rstrip()
+        log.info('Received message from EnergyPlus: ' + msg)
+        arry = msg.split()
         slot = 6
         flag = arry[1]
         output = self.output()
@@ -204,17 +198,14 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                         self.exit('Unable to convert received value to double.')
                     slot += 1
 
-
-    def exit(self, mssg):
+    def exit(self, msg):
         self.stop()
-        log.error(mssg)
-             
+        log.error(msg)
 
     def stop(self):
         if self.socket_server:
             self.socket_server.stop()
             self.socket_server = None
-            
 
     def write_port_file(self, path):
         fh = open(path, "w+")
@@ -225,7 +216,6 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         fh.write('  </ipc>\n')
         fh.write('</BCVTB-client>')
         fh.close()
-
 
     def write_variable_file(self, path):
         fh = open(path, "w+")
@@ -246,8 +236,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                 fh.write('  </variable>\n')
         fh.write('</BCVTB-variables>\n')
         fh.close()
-        
-        
+
     @RPC.export    
     def request_new_schedule(self, requester_id, task_id, priority, requests):
         """RPC method
@@ -270,11 +259,10 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         """
         log.debug(requester_id + " requests new schedule " + task_id + " " + str(requests))
         result = {'result':SUCCESS, 
-                   'data': {}, 
-                   'info':''}
+                  'data': {}, 
+                  'info':''}
         return result
-    
-    
+
     @RPC.export 
     def request_cancel_schedule(self, requester_id, task_id):
         """RPC method
@@ -296,8 +284,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                   'data': {},
                   'info': ''}
         return result   
-        
-        
+
     @RPC.export
     def get_point(self, topic, **kwargs):
         """RPC method
@@ -317,7 +304,6 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         if obj is not None: # we have an exact match to the  <device_name topic>/<point name>, so return the first value
             return obj.get('value', None)
         return None
-
             
     @RPC.export
     def set_point(self, requester_id, topic, value, **kwargs):
@@ -347,7 +333,6 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         else:
             raise RuntimeError("Failed to set value: " + result)
      
-     
     @RPC.export
     def revert_point(self, requester_id, topic, **kwargs):
         """RPC method
@@ -371,7 +356,6 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         else:
             log.warning("Unable to revert topic. No topic match or default defined!")
 
-
     @RPC.export
     def revert_device(self, requester_id, device_name, **kwargs): 
         """RPC method
@@ -391,14 +375,13 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         if objs is not None:
             for obj in objs:
                 point_name = obj.get('field', None)
-                topic = device_name+"/"+point_name if point_name else device_name
+                topic = device_name+"/" + point_name if point_name else device_name
                 if obj.has_key('default'):
                     value = obj.get('default')
-                    log.debug("Reverting "+topic+" to "+str(value))
+                    log.debug("Reverting " + topic + " to " + str(value))
                     self.update_topic_rpc(requester_id, topic, value)
                 else:
-                    log.warning("Unable to revert "+topic+". No default defined!")
-        
+                    log.warning("Unable to revert " + topic + ". No default defined!")
     
     def update_topic_rpc(self, requester_id, topic, value):
         obj = self.find_best_match(topic)
@@ -418,20 +401,17 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                     if obj.get('last_update') is None:
                         set_topic = obj['topic']  + '/' + obj['field']
                         value = obj['value'] if obj.has_key('value') else obj['default']
-                        self.update_topic_rpc('ahp', set_topic, value)
+                        self.update_topic_rpc(sender, set_topic, value)
         return
-                        
-         
+   
     def on_update_topic_rpc(self, requester_id, topic, value):
         self.update_complete()
-        
-        
+
     def on_update_complete(self):
         self.send_eplus_msg()
-        
-        
-    class SocketServer():
 
+
+    class SocketServer():
 
         def __init__(self, **kwargs):
             self.sock = None
@@ -441,16 +421,13 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
             self.rcvd = None
             self.host = None
             self.port = None
-        
-        
-        def on_recv(self, mssg):
-            log.debug('Received %s' % mssg)
-            
-            
+
+        def on_recv(self, msg):
+            log.debug('Received %s' % msg)
+
         def run(self):
             self.listen()
-        
-        
+
         def connect(self):
             if self.host is None:
                 self.host = socket.gethostname()
@@ -461,46 +438,41 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
             else:
                 self.sock.bind((self.host, self.port))
             log.debug('Bound to %r on %r' % (self.port, self.host))
-            
-    
-        def send(self, mssg):
-            self.sent = mssg
+
+        def send(self, msg):
+            self.sent = msg
             if self.client is not None and self.sock is not None:
                 try:
                     self.client.send(self.sent)
                 except Exception:
                     log.error('We got an error trying to send a message.')
-              
-                
+
         def recv(self):
             if self.client is not None and self.sock is not None:
                 try:
-                    mssg = self.client.recv(self.size)
+                    msg = self.client.recv(self.size)
                 except Exception:
                     log.error('We got an error trying to read a message')
-                return mssg
-            
-            
+                return msg
+
         def start(self):
             log.debug('Starting socket server')
             self.run()
-            
-            
+
         def stop(self):
             if self.sock != None:
                 self.sock.close()
-    
-    
+
         def listen(self):
             self.sock.listen(10)
             log.debug('server now listening')
             self.client, addr = self.sock.accept()
             log.debug('Connected with ' + addr[0] + ':' + str(addr[1]))
-            while 1:
-                mssg = self.recv()
-                if mssg:
-                    self.rcvd = mssg 
-                    self.on_recv(mssg)
+            while True:
+                msg = self.recv()
+                if msg:
+                    self.rcvd = msg 
+                    self.on_recv(msg)
             
 
 def main(argv=sys.argv):
