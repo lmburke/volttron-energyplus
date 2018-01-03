@@ -88,6 +88,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         self.weather = None
         self.socketFile = None
         self.variableFile = None
+        self.self_advance_interval = None
         self.time = 0
         self.vers = 2
         self.flag = 0
@@ -157,7 +158,10 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
             msg = '%r %r %r 0 0 %r' % (self.vers, self.flag, self.eplus_inputs, self.time)
             for obj in args.itervalues():
                 if obj.get('name', None) and obj.get('type', None):
-                    msg = msg + ' ' + str(obj.get('value'))
+                    value = obj.get('value')
+                    if isinstance(value, bool):
+                        value = int(value)
+                    msg = msg + ' ' + str(value)
             self.sent = msg + '\n'
             log.info('Sending message to EnergyPlus: ' + msg)
             self.socket_server.send(self.sent)
@@ -166,6 +170,9 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         self.rcvd = msg
         self.parse_eplus_msg(msg)
         self.publish_all_outputs()
+
+        if self.self_advance_interval is not None:
+            self.core.spawn_later(self.self_advance_interval, self.advance_simulation)
 
     def parse_eplus_msg(self, msg):
         msg = msg.rstrip()
@@ -193,7 +200,9 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
             for key in output:
                 if self.output(key, 'name') and self.output(key, 'type'):
                     try:
-                        self.output(key, 'value', float(arry[slot]))
+                        value = float(arry[slot])
+                        log.debug("{}: {}".format(key, value))
+                        self.output(key, 'value', value)
                     except:
                         self.exit('Unable to convert received value to double.')
                     slot += 1
@@ -201,6 +210,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
     def exit(self, msg):
         self.stop()
         log.error(msg)
+        sys.exit()
 
     def stop(self):
         if self.socket_server:
@@ -326,12 +336,24 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         """
         topic = topic.strip('/')
         log.debug("Attempting to write "+topic+" with value: "+str(value))
-        result = self.update_topic_rpc(requester_id, topic, value)
+        result = self.update_topic_rpc(topic, value)
         log.debug("Writing: {topic} : {value} {result}".format(topic=topic, value=value, result=result))
         if result==SUCCESS:
             return value;
         else:
             raise RuntimeError("Failed to set value: " + result)
+
+    @RPC.export
+    def set_multiple_points(self, requester_id, topics_values, **kwargs):
+        for topic, value in topics_values:
+            topic = topic.strip('/')
+            self.set_point(requester_id, topic, value)
+
+        #self.on_update_topic_rpc()
+
+        results = {}
+
+        return results
      
     @RPC.export
     def revert_point(self, requester_id, topic, **kwargs):
@@ -352,7 +374,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         if obj and obj.has_key('default'):
             value = obj.get('default')
             log.debug("Reverting topic "+topic+" to "+str(value))
-            self.update_topic_rpc(requester_id, topic, value)
+            self.update_topic_rpc(topic, value)
         else:
             log.warning("Unable to revert topic. No topic match or default defined!")
 
@@ -379,32 +401,32 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                 if obj.has_key('default'):
                     value = obj.get('default')
                     log.debug("Reverting " + topic + " to " + str(value))
-                    self.update_topic_rpc(requester_id, topic, value)
+                    self.update_topic_rpc(topic, value)
                 else:
                     log.warning("Unable to revert " + topic + ". No default defined!")
     
-    def update_topic_rpc(self, requester_id, topic, value):
+    def update_topic_rpc(self, topic, value):
         obj = self.find_best_match(topic)
         if obj is not None:
             obj['value'] = value
             obj['last_update'] = datetime.utcnow().isoformat(' ') + 'Z'
-            self.on_update_topic_rpc(requester_id, topic, value)
+            if self.self_advance_interval is None:
+                self.on_update_topic_rpc()
             return SUCCESS
         return FAILURE
              
-    def advance_simulation(self, peer, sender, bus, topic, headers, message):
+    def advance_simulation(self):
         log.info('Advancing simulation.')
         for obj in self.input().itervalues():
             log.info('ADVANCE: {}'.format(obj))
-            if (obj.has_key('blocking') and obj.get('blocking')) or not obj.has_key('blocking'):
-                if obj.has_key('last_update'):
-                    if obj.get('last_update') is None:
-                        set_topic = obj['topic']  + '/' + obj['field']
-                        value = obj['value'] if obj.has_key('value') else obj['default']
-                        self.update_topic_rpc(sender, set_topic, value)
+            set_topic = obj['topic'] + '/' + obj['field']
+            value = obj['value'] if obj.has_key('value') else obj['default']
+            self.update_topic_rpc(set_topic, value)
+
+        self.on_update_complete()
         return
    
-    def on_update_topic_rpc(self, requester_id, topic, value):
+    def on_update_topic_rpc(self):
         self.update_complete()
 
     def on_update_complete(self):
