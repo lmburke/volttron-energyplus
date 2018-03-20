@@ -72,7 +72,7 @@ from volttron.platform.pubsub.agent import SynchronizingPubSubAgent
 
 
 utils.setup_logging()
-log = logging.getLogger(__name__)
+_log = logging.getLogger(__name__)
 SUCCESS = 'SUCCESS'
 FAILURE = 'FAILURE'
 
@@ -142,14 +142,14 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
             bcvtb_dir = os.path.expanduser(bcvtb_dir)
         if bcvtb_dir[0] != '/':
             bcvtb_dir = os.path.join(self.cwd,bcvtb_dir)
-        log.debug('Working in %r', model_dir)
+        _log.debug('Working in %r', model_dir)
         self.write_port_file(os.path.join(model_dir,'socket.cfg'))
         self.write_variable_file(os.path.join(model_dir,'variables.cfg'))
         if self.version >= 8.4:
             cmd_str = "cd %s; export BCVTB_HOME=%s; energyplus -w %s -r %s" % (model_dir, bcvtb_dir, weather_path, model_path)
         else:
             cmd_str = "export BCVTB_HOME=%s; runenergyplus %s %s" % (bcvtb_dir, model_path, weather_path)
-        log.debug('Running: %s', cmd_str)
+        _log.debug('Running: %s', cmd_str)
         self.simulation = subprocess.Popen(cmd_str, shell=True)
 
     def send_eplus_msg(self):
@@ -163,7 +163,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                         value = int(value)
                     msg = msg + ' ' + str(value)
             self.sent = msg + '\n'
-            log.info('Sending message to EnergyPlus: ' + msg)
+            _log.info('Sending message to EnergyPlus: ' + msg)
             self.socket_server.send(self.sent)
 
     def recv_eplus_msg(self, msg):
@@ -176,7 +176,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
 
     def parse_eplus_msg(self, msg):
         msg = msg.rstrip()
-        log.info('Received message from EnergyPlus: ' + msg)
+        _log.info('Received message from EnergyPlus: ' + msg)
         arry = msg.split()
         slot = 6
         flag = arry[1]
@@ -201,7 +201,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                 if self.output(key, 'name') and self.output(key, 'type'):
                     try:
                         value = float(arry[slot])
-                        log.debug("{}: {}".format(key, value))
+                        _log.debug("{}: {}".format(key, value))
                         self.output(key, 'value', value)
                     except:
                         self.exit('Unable to convert received value to double.')
@@ -209,7 +209,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
 
     def exit(self, msg):
         self.stop()
-        log.error(msg)
+        _log.error(msg)
         sys.exit()
 
     def stop(self):
@@ -267,7 +267,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         :rtype: dict
         
         """
-        log.debug(requester_id + " requests new schedule " + task_id + " " + str(requests))
+        _log.debug(requester_id + " requests new schedule " + task_id + " " + str(requests))
         result = {'result':SUCCESS, 
                   'data': {}, 
                   'info':''}
@@ -289,7 +289,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         :rtype: dict
         
         """
-        log.debug(requester_id + " canceled " + task_id)
+        _log.debug(requester_id + " canceled " + task_id)
         result = {'result':SUCCESS,
                   'data': {},
                   'info': ''}
@@ -335,9 +335,9 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         
         """
         topic = topic.strip('/')
-        log.debug("Attempting to write "+topic+" with value: "+str(value))
+        _log.debug("Attempting to write "+topic+" with value: "+str(value))
         result = self.update_topic_rpc(topic, value)
-        log.debug("Writing: {topic} : {value} {result}".format(topic=topic, value=value, result=result))
+        _log.debug("Writing: {topic} : {value} {result}".format(topic=topic, value=value, result=result))
         if result==SUCCESS:
             return value;
         else:
@@ -373,10 +373,10 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         obj = self.find_best_match(topic)
         if obj and obj.has_key('default'):
             value = obj.get('default')
-            log.debug("Reverting topic "+topic+" to "+str(value))
+            _log.debug("Reverting topic "+topic+" to "+str(value))
             self.update_topic_rpc(topic, value)
         else:
-            log.warning("Unable to revert topic. No topic match or default defined!")
+            _log.warning("Unable to revert topic. No topic match or default defined!")
 
     @RPC.export
     def revert_device(self, requester_id, device_name, **kwargs): 
@@ -400,10 +400,10 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                 topic = device_name+"/" + point_name if point_name else device_name
                 if obj.has_key('default'):
                     value = obj.get('default')
-                    log.debug("Reverting " + topic + " to " + str(value))
+                    _log.debug("Reverting " + topic + " to " + str(value))
                     self.update_topic_rpc(topic, value)
                 else:
-                    log.warning("Unable to revert " + topic + ". No default defined!")
+                    _log.warning("Unable to revert " + topic + ". No default defined!")
     
     def update_topic_rpc(self, topic, value):
         obj = self.find_best_match(topic)
@@ -416,9 +416,9 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         return FAILURE
              
     def advance_simulation(self):
-        log.info('Advancing simulation.')
+        _log.info('Advancing simulation.')
         for obj in self.input().itervalues():
-            log.info('ADVANCE: {}'.format(obj))
+            _log.info('ADVANCE: {}'.format(obj))
             set_topic = obj['topic'] + '/' + obj['field']
             value = obj['value'] if obj.has_key('value') else obj['default']
             self.update_topic_rpc(set_topic, value)
@@ -445,7 +445,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
             self.port = None
 
         def on_recv(self, msg):
-            log.debug('Received %s' % msg)
+            _log.debug('Received %s' % msg)
 
         def run(self):
             self.listen()
@@ -459,7 +459,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                 self.port = self.sock.getsockname()[1]
             else:
                 self.sock.bind((self.host, self.port))
-            log.debug('Bound to %r on %r' % (self.port, self.host))
+            _log.debug('Bound to %r on %r' % (self.port, self.host))
 
         def send(self, msg):
             self.sent = msg
@@ -467,18 +467,18 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                 try:
                     self.client.send(self.sent)
                 except Exception:
-                    log.error('We got an error trying to send a message.')
+                    _log.error('We got an error trying to send a message.')
 
         def recv(self):
             if self.client is not None and self.sock is not None:
                 try:
                     msg = self.client.recv(self.size)
                 except Exception:
-                    log.error('We got an error trying to read a message')
+                    _log.error('We got an error trying to read a message')
                 return msg
 
         def start(self):
-            log.debug('Starting socket server')
+            _log.debug('Starting socket server')
             self.run()
 
         def stop(self):
@@ -487,9 +487,9 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
 
         def listen(self):
             self.sock.listen(10)
-            log.debug('server now listening')
+            _log.debug('server now listening')
             self.client, addr = self.sock.accept()
-            log.debug('Connected with ' + addr[0] + ':' + str(addr[1]))
+            _log.debug('Connected with ' + addr[0] + ':' + str(addr[1]))
             while True:
                 msg = self.recv()
                 if msg:
@@ -502,7 +502,7 @@ def main(argv=sys.argv):
     try:
         utils.vip_main(EnergyPlusAgent)
     except Exception as e:
-        log.exception(e)
+        _log.exception(e)
 
 
 if __name__ == '__main__':
