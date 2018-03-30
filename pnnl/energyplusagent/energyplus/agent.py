@@ -66,7 +66,7 @@ from datetime import datetime
 from gevent import socket
 from volttron.platform.agent import utils
 from volttron.platform.vip.agent import Core, RPC
-from volttron.platform.pubsub.agent import SynchronizingPubSubAgent
+from energyplus.hacked_pubsub import SynchronizingPubSubAgent
 
 
 utils.setup_logging()
