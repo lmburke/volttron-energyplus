@@ -60,12 +60,10 @@ from __future__ import absolute_import
 
 import logging
 import os
-import socket
 import subprocess
 import sys
 from datetime import datetime
-from gevent import monkey
-monkey.patch_socket()
+from gevent import socket
 from volttron.platform.agent import utils
 from volttron.platform.vip.agent import Core, RPC
 from volttron.platform.pubsub.agent import SynchronizingPubSubAgent
@@ -75,6 +73,69 @@ utils.setup_logging()
 _log = logging.getLogger(__name__)
 SUCCESS = 'SUCCESS'
 FAILURE = 'FAILURE'
+
+
+class SocketServer():
+    def __init__(self, **kwargs):
+        self.sock = None
+        self.size = 4096
+        self.client = None
+        self.sent = None
+        self.rcvd = None
+        self.host = None
+        self.port = None
+
+    def on_recv(self, msg):
+        _log.debug('Received %s' % msg)
+
+    def run(self):
+        self.listen()
+
+    def connect(self):
+        if self.host is None:
+            self.host = socket.gethostname()
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        if self.port is None:
+            self.sock.bind((self.host, 0))
+            self.port = self.sock.getsockname()[1]
+        else:
+            self.sock.bind((self.host, self.port))
+        _log.debug('Bound to %r on %r' % (self.port, self.host))
+
+    def send(self, msg):
+        self.sent = msg
+        if self.client is not None and self.sock is not None:
+            try:
+                self.client.send(self.sent)
+            except Exception:
+                _log.error('We got an error trying to send a message.')
+
+    def recv(self):
+        if self.client is not None and self.sock is not None:
+            try:
+                msg = self.client.recv(self.size)
+            except Exception:
+                _log.error('We got an error trying to read a message')
+            return msg
+
+    def start(self):
+        _log.debug('Starting socket server')
+        self.run()
+
+    def stop(self):
+        if self.sock != None:
+            self.sock.close()
+
+    def listen(self):
+        self.sock.listen(10)
+        _log.debug('server now listening')
+        self.client, addr = self.sock.accept()
+        _log.debug('Connected with ' + addr[0] + ':' + str(addr[1]))
+        while True:
+            msg = self.recv()
+            if msg:
+                self.rcvd = msg
+                self.on_recv(msg)
 
     
 class EnergyPlusAgent(SynchronizingPubSubAgent):
@@ -116,7 +177,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         self.start_simulation()
 
     def start_socket_server(self):
-        self.socket_server = self.SocketServer()
+        self.socket_server = SocketServer()
         self.socket_server.on_recv = self.recv_eplus_msg
         self.socket_server.connect()
         self.core.spawn(self.socket_server.start)    
@@ -218,34 +279,32 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
             self.socket_server = None
 
     def write_port_file(self, path):
-        fh = open(path, "w+")
-        fh.write('<?xml version="1.0" encoding="ISO-8859-1"?>\n')
-        fh.write('<BCVTB-client>\n')
-        fh.write('  <ipc>\n')
-        fh.write('    <socket port="%r" hostname="%s"/>\n' % (self.socket_server.port, self.socket_server.host))
-        fh.write('  </ipc>\n')
-        fh.write('</BCVTB-client>')
-        fh.close()
+        with open(path, "w+") as fh:
+            fh.write('<?xml version="1.0" encoding="ISO-8859-1"?>\n')
+            fh.write('<BCVTB-client>\n')
+            fh.write('  <ipc>\n')
+            fh.write('    <socket port="%r" hostname="%s"/>\n' % (self.socket_server.port, self.socket_server.host))
+            fh.write('  </ipc>\n')
+            fh.write('</BCVTB-client>')
 
     def write_variable_file(self, path):
-        fh = open(path, "w+")
-        fh.write('<?xml version="1.0" encoding="ISO-8859-1"?>\n')
-        fh.write('<!DOCTYPE BCVTB-variables SYSTEM "variables.dtd">\n')
-        fh.write('<BCVTB-variables>\n')
-        for obj in self.output().itervalues():
-            if obj.has_key('name') and obj.has_key('type'):
-                self.eplus_outputs = self.eplus_outputs + 1
-                fh.write('  <variable source="EnergyPlus">\n')
-                fh.write('    <EnergyPlus name="%s" type="%s"/>\n' % (obj.get('name'), obj.get('type')))
-                fh.write('  </variable>\n')
-        for obj in self.input().itervalues():
-            if obj.has_key('name') and obj.has_key('type'):
-                self.eplus_inputs = self.eplus_inputs + 1
-                fh.write('  <variable source="Ptolemy">\n')
-                fh.write('    <EnergyPlus %s="%s"/>\n' % (obj.get('type'), obj.get('name')))
-                fh.write('  </variable>\n')
-        fh.write('</BCVTB-variables>\n')
-        fh.close()
+        with open(path, "w+") as fh:
+            fh.write('<?xml version="1.0" encoding="ISO-8859-1"?>\n')
+            fh.write('<!DOCTYPE BCVTB-variables SYSTEM "variables.dtd">\n')
+            fh.write('<BCVTB-variables>\n')
+            for obj in self.output().itervalues():
+                if obj.has_key('name') and obj.has_key('type'):
+                    self.eplus_outputs = self.eplus_outputs + 1
+                    fh.write('  <variable source="EnergyPlus">\n')
+                    fh.write('    <EnergyPlus name="%s" type="%s"/>\n' % (obj.get('name'), obj.get('type')))
+                    fh.write('  </variable>\n')
+            for obj in self.input().itervalues():
+                if obj.has_key('name') and obj.has_key('type'):
+                    self.eplus_inputs = self.eplus_inputs + 1
+                    fh.write('  <variable source="Ptolemy">\n')
+                    fh.write('    <EnergyPlus %s="%s"/>\n' % (obj.get('type'), obj.get('name')))
+                    fh.write('  </variable>\n')
+            fh.write('</BCVTB-variables>\n')
 
     @RPC.export    
     def request_new_schedule(self, requester_id, task_id, priority, requests):
@@ -433,68 +492,7 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         self.send_eplus_msg()
 
 
-    class SocketServer():
 
-        def __init__(self, **kwargs):
-            self.sock = None
-            self.size = 4096
-            self.client = None
-            self.sent = None
-            self.rcvd = None
-            self.host = None
-            self.port = None
-
-        def on_recv(self, msg):
-            _log.debug('Received %s' % msg)
-
-        def run(self):
-            self.listen()
-
-        def connect(self):
-            if self.host is None:
-                self.host = socket.gethostname()
-            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            if self.port is None:
-                self.sock.bind((self.host, 0))
-                self.port = self.sock.getsockname()[1]
-            else:
-                self.sock.bind((self.host, self.port))
-            _log.debug('Bound to %r on %r' % (self.port, self.host))
-
-        def send(self, msg):
-            self.sent = msg
-            if self.client is not None and self.sock is not None:
-                try:
-                    self.client.send(self.sent)
-                except Exception:
-                    _log.error('We got an error trying to send a message.')
-
-        def recv(self):
-            if self.client is not None and self.sock is not None:
-                try:
-                    msg = self.client.recv(self.size)
-                except Exception:
-                    _log.error('We got an error trying to read a message')
-                return msg
-
-        def start(self):
-            _log.debug('Starting socket server')
-            self.run()
-
-        def stop(self):
-            if self.sock != None:
-                self.sock.close()
-
-        def listen(self):
-            self.sock.listen(10)
-            _log.debug('server now listening')
-            self.client, addr = self.sock.accept()
-            _log.debug('Connected with ' + addr[0] + ':' + str(addr[1]))
-            while True:
-                msg = self.recv()
-                if msg:
-                    self.rcvd = msg 
-                    self.on_recv(msg)
             
 
 def main(argv=sys.argv):
