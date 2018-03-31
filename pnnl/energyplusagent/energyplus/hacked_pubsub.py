@@ -182,7 +182,7 @@ class PubSubAgent(Agent):
             if None not in time_stamp_values:
                 # We handle minutes separately for eplus interface
                 minutes = time_stamp_values[-1]
-                _now = datetime(2017, *(int(x) for x in time_stamp_values[:-1]))
+                _now = datetime(2017, *(int(round(x)) for x in time_stamp_values[:-1]))
                 _now += timedelta(minutes=minutes)
 
         _now = utils.format_timestamp(_now)
