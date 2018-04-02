@@ -62,7 +62,7 @@ import logging
 import os
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from gevent import socket
 from volttron.platform.agent import utils
 from volttron.platform.vip.agent import Core, RPC
@@ -139,8 +139,6 @@ class SocketServer():
 
     
 class EnergyPlusAgent(SynchronizingPubSubAgent):
-
-
     def __init__(self, config_path, **kwargs):
         super(EnergyPlusAgent, self).__init__(config_path, **kwargs)
         self.version = 8.4
@@ -150,6 +148,9 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         self.socketFile = None
         self.variableFile = None
         self.self_advance_interval = None
+        self.previous_timestamp = None
+        self.first_publish = False
+        self.advance_greenlet = None
         self.time = 0
         self.vers = 2
         self.flag = 0
@@ -230,10 +231,45 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
     def recv_eplus_msg(self, msg):
         self.rcvd = msg
         self.parse_eplus_msg(msg)
-        self.publish_all_outputs()
 
-        if self.self_advance_interval is not None:
-            self.core.spawn_later(self.self_advance_interval, self.advance_simulation)
+        time_stamp_object_names = ("month", "day", "hour", "minute")
+
+        time_stamp_objects = [self.output(name) for name in time_stamp_object_names]
+
+        _now = None
+
+        if all(time_stamp_objects):
+            time_stamp_values = [obj.get("value") for obj in time_stamp_objects]
+            if None not in time_stamp_values:
+                # We handle minutes separately for eplus interface
+                minutes = time_stamp_values[-1]
+                _now = datetime(2017, *(int(round(x)) for x in time_stamp_values[:-1]))
+                _now += timedelta(minutes=minutes)
+
+        _log.info("Reported simulation timestamp: {}, previous: {}".format(_now, self.previous_timestamp))
+
+        next_wait = 0.0
+        if _now is not None and self.previous_timestamp is not None and _now > self.previous_timestamp:
+            self.publish_all_outputs()
+            long_wait = False
+
+            # Always wait for commands after our first publish.
+            if not self.first_publish:
+                self.first_publish = True
+                long_wait = True
+
+            # Crossed the hour boundry.
+            if _now.hour != self.previous_timestamp.hour:
+                long_wait = True
+
+            if long_wait or not self.simulation_pause:
+                next_wait = self.self_advance_interval
+        else:
+            _log.debug("Skipping publish, model still warming up.")
+
+        self.previous_timestamp = _now
+
+        self.advance_greenlet = self.core.spawn_later(next_wait, self.advance_simulation)
 
     def parse_eplus_msg(self, msg):
         msg = msg.rstrip()
@@ -394,11 +430,10 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         
         """
         topic = topic.strip('/')
-        _log.debug("Attempting to write "+topic+" with value: "+str(value))
         result = self.update_topic_rpc(topic, value)
         _log.debug("Writing: {topic} : {value} {result}".format(topic=topic, value=value, result=result))
         if result==SUCCESS:
-            return value;
+            return value
         else:
             raise RuntimeError("Failed to set value: " + result)
 
@@ -408,9 +443,12 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
             topic = topic.strip('/')
             self.set_point(requester_id, topic, value)
 
-        #self.on_update_topic_rpc()
-
         results = {}
+
+        if self.simulation_pause:
+            if self.advance_greenlet is not None:
+                self.advance_greenlet.kill()
+            self.advance_greenlet = self.core.spawn_later(0.0, self.advance_simulation)
 
         return results
      
@@ -469,24 +507,18 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
         if obj is not None:
             obj['value'] = value
             obj['last_update'] = datetime.utcnow().isoformat(' ') + 'Z'
-            if self.self_advance_interval is None:
-                self.on_update_topic_rpc()
             return SUCCESS
         return FAILURE
              
     def advance_simulation(self):
         _log.info('Advancing simulation.')
         for obj in self.input().itervalues():
-            _log.info('ADVANCE: {}'.format(obj))
             set_topic = obj['topic'] + '/' + obj['field']
             value = obj['value'] if obj.has_key('value') else obj['default']
             self.update_topic_rpc(set_topic, value)
 
         self.on_update_complete()
         return
-   
-    def on_update_topic_rpc(self):
-        self.update_complete()
 
     def on_update_complete(self):
         self.send_eplus_msg()
