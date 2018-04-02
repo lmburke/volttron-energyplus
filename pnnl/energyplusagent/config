@@ -1,0 +1,150 @@
+{
+	"properties" : {
+		"identity" : "platform.actuator",
+		"model" : "~/workspaces/volttron/eplus/scenario_c.idf",
+		"weather" : "~/workspaces/volttron/eplus/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw",
+		"bcvtb_home" : "~/workspaces/volttron/bcvtb",
+		"simulation_pause":true, # Only pause after first publish and at the top of every hour to wait for input.
+		"self_advance_interval":2
+	},
+	"inputs" : {
+		"Ch1_D" : {
+			"name" : "Ch1_D",
+			"type" : "schedule",
+			"topic" : "centrifugal_chiller0",
+			"field" : "command",
+			"default": 0
+		},
+		"Ch2_D" : {
+			"name" : "Ch2_D",
+			"type" : "schedule",
+			"topic" : "centrifugal_chiller1",
+			"field" : "command",
+			"default": 0
+		},	
+		"Ch3_D" : {
+			"name" : "Ch3_D",
+			"type" : "schedule",
+			"topic" : "centrifugal_chiller2",
+			"field" : "command",
+			"default" : 0
+		},
+		"Ab_D" : {
+			"name" : "Ab_D",
+			"type" : "schedule",
+			"topic" : "absorption_chiller",
+			"field" : "command",
+			"default": 0
+		},
+		"B1_D" : {
+			"name" : "B1_D",
+			"type" : "schedule",
+			"topic" : "boiler0",
+			"field" : "command",
+			"default": 0
+		},
+		"B2_D" : {
+			"name" : "B2_D",
+			"type" : "schedule",
+			"topic" : "boiler1",
+			"field" : "command",
+			"default": 0
+		},
+		"B3_D" : {
+			"name" : "B3_D",
+			"type" : "schedule",
+			"topic" : "boiler2",
+			"field" : "command",
+			"default": 0
+		},
+		"Mt_P" : {
+			"name" : "Mt_P",
+			"type" : "schedule",
+			"topic" : "micro_turbine_generator",
+			"field" : "set_point",
+			"default": 0
+		},
+		"FC_P" : {
+			"name" : "FC_P",
+			"type" : "schedule",
+			"topic" : "fuel_cell",
+			"field" : "set_point",
+			"default": 0
+		},
+		"TS_C" : {
+			"name" : "TS_C",
+			"type" : "schedule",
+			"topic" : "thermal_storage",
+			"field" : "charge_load",
+			"default": 0
+		},
+		"TS_D" : {
+			"name" : "TS_D",
+			"type" : "schedule",
+			"topic" : "thermal_storage",
+			"field" : "discharge_load",
+			"default": 0
+		},
+		"Bat_Ch" : {
+			"name" : "Bat_Ch",
+			"type" : "schedule",
+			"topic" : "battery",
+			"field" : "charge_load",
+			"default": 0
+		},
+		"Bat_Dis" : {
+			"name" : "Bat_Dis",
+			"type" : "schedule",
+			"topic" : "battery",
+			"field" : "discharge_load",
+			"default": 0
+		},
+		"Electricity_Price" : {
+			"name" : "Electricity_Price",
+			"type" : "schedule",
+			"topic" : "electricity",
+			"field" : "price",
+			"default": 0.10
+		},
+		"NaturalGas_Price" : {
+			"name" : "NaturalGas_Price",
+			"type" : "schedule",
+			"topic" : "natural_gas",
+			"field" : "price",
+			"default": 8.0
+		}
+	},
+	"outputs" : {
+		"SOC" : {
+			"name" : "EMS",
+			"type" : "SOC",
+			"topic" : "devices/battery/all",
+			"field" : "soc",
+			"meta" : {}
+		},
+		"SOC_ts" : {
+			"name" : "EMS",
+			"type" : "SOC_ts",
+			"topic" : "devices/thermal_storage/all",
+			"field" : "soc",
+			"meta" : {}
+		},
+		"month" : {
+			"name" : "EMS",
+			"type" : "currentMonthV"
+		},
+		"day" : {
+			"name" : "EMS",
+			"type" : "currentDayOfMonthV"
+		},
+		"hour" : {
+			"name" : "EMS",
+			"type" : "currentHourV"
+		},
+		"minute" : {
+			"name" : "EMS",
+			"type" : "currentMinuteV"
+		}
+	}
+}
+
