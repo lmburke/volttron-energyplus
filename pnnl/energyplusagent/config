@@ -1,8 +1,8 @@
 {
 	"properties" : {
-		"model" : "~/workspaces/volttron-energyplus/pnnl/energyplusagent/scenario_c_winter/hospital.idf",
-		"weather" : "~/workspaces/volttron-energyplus/pnnl/energyplusagent/weather/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw",
-		"bcvtb_home" : "~/workspaces/volttron-energyplus/pnnl/energyplusagent/bcvtb",
+		"model" : "~/volttron-energyplus/pnnl/energyplusagent/scenario_c_winter/hospital.idf",
+		"weather" : "~/volttron-energyplus/pnnl/energyplusagent/weather/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw",
+		"bcvtb_home" : "~/volttron-energyplus/bcvtb",
 		"simulation_pause":true, # Only pause after first publish and at the top of every hour to wait for input.
 		"self_advance_interval":20
 	},
