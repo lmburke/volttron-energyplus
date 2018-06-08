@@ -224,6 +224,9 @@ class EnergyPlusAgent(SynchronizingPubSubAgent):
                     if isinstance(value, bool):
                         value = int(value)
                     msg = msg + ' ' + str(value)
+                    _log.debug("Sending value {} ({}/{}): {}".format(obj.get("name"),
+                                                                     obj.get("topic"),
+                                                                     obj.get("field"), value))
             self.sent = msg + '\n'
             _log.info('Sending message to EnergyPlus: ' + msg)
             self.socket_server.send(self.sent)
