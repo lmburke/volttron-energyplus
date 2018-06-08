@@ -8,9 +8,14 @@ The following instructions assume you have already cloned this repository, and t
 
 Make sure you have installed [VOLTTRON](https://github.com/VOLTTRON/volttron) and its dependencies.
 
-You must have an installation of EnergyPlus, preferably version 8.4 or higher. The EnergyPlus model included is in version 8.4 format. 
+You must have an installation of EnergyPlus version 8.5. Newer versions will not work.
 
-EnergyPlus uses the [Building Control Virtual Test Bed](https://simulationresearch.lbl.gov/bcvtb) for socket communication. You do not need to install the BCVTB; the library is included in this repository. However, the BCVTB library does require Java.
+EnergyPlus uses the [Building Control Virtual Test Bed](https://simulationresearch.lbl.gov/bcvtb) for socket communication.
+You do not need to install the BCVTB; the library is included in this repository. However, the BCVTB library does require Java.
+
+You can install java with the command
+
+$ sudo apt install default-jre
 
 ## INSTALLATION ##
 
