@@ -318,15 +318,13 @@ RunPeriod,
     7,                       !- Begin Month
     1,                       !- Begin Day of Month
     7,                       !- End Month
-    5,                      !- End Day of Month
+    15,                      !- End Day of Month
     Sunday,                  !- Day of Week for Start Day
     No,                      !- Use Weather File Holidays and Special Days
     No,                      !- Use Weather File Daylight Saving Period
     No,                      !- Apply Weekend Holiday Rule
     Yes,                     !- Use Weather File Rain Indicators
     Yes;                     !- Use Weather File Snow Indicators
-
-
 
 
 !-   ===========  ALL OBJECTS IN CLASS: RUNPERIODCONTROL:SPECIALDAYS ===========
@@ -31675,8 +31673,8 @@ Chiller:Absorption:Indirect,
     35.0,                    !- Design Condenser Inlet Temperature {C}
     10.0,                    !- Condenser Inlet Temperature Lower Limit {C}
     5.0,                     !- Chilled Water Outlet Temperature Lower Limit {C}
-    0.0011,                  !- Design Chilled Water Flow Rate {m3/s}
-    0.0011,                  !- Design Condenser Water Flow Rate {m3/s}
+    0.008,                  !- Design Chilled Water Flow Rate {m3/s}
+    0.011,                  !- Design Condenser Water Flow Rate {m3/s}
     VariableFlow,            !- Chiller Flow Mode
     SteamUseFPLR,            !- Generator Heat Input Function of Part Load Ratio Curve Name
     PumpUseFPLR,             !- Pump Electric Input Function of Part Load Ratio Curve Name
