@@ -34596,21 +34596,6 @@ ExternalInterface:Schedule,
     0;                       !- Initial Value
 
 
-
-
-
-
-ExternalInterface:Schedule,
-    Electricity_Price,       !- Name
-    Any Number,              !- Schedule Type Limits Name
-    0;                       !- Initial Value
-
-ExternalInterface:Schedule,
-    NaturalGas_Price,        !- Name
-    Any Number,              !- Schedule Type Limits Name
-    0;                       !- Initial Value
-
-
 !-   ===========  ALL OBJECTS IN CLASS: AVAILABILITYMANAGER:NIGHTCYCLE ===========
 
 AvailabilityManager:NightCycle,
