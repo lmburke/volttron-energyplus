@@ -1,6 +1,6 @@
 {
 	"properties" : {
-		"model" : "~/volttron-energyplus/pnnl/energyplusagent/scenario_c/Scenario_C_Opt.idf",
+		"model" : "~/volttron-energyplus/pnnl/energyplusagent/scenario_b/Scenario_B_Opt_NY.idf",
 		"weather" : "~/volttron-energyplus/pnnl/energyplusagent/weather/NY2017-2018.epw",
 		"bcvtb_home" : "~/volttron-energyplus/bcvtb",
 		"simulation_pause":true, # Only pause after first publish and at the top of every hour to wait for input.
@@ -21,13 +21,6 @@
 			"field" : "command",
 			"default": 0
 		},	
-		"Ch3_D" : {
-			"name" : "Ch3_D",
-			"type" : "schedule",
-			"topic" : "centrifugal_chiller2",
-			"field" : "command",
-			"default" : 0
-		},
 		"Ab_D" : {
 			"name" : "Ab_D",
 			"type" : "schedule",
@@ -49,13 +42,6 @@
 			"field" : "command",
 			"default": 0
 		},
-		"B3_D" : {
-			"name" : "B3_D",
-			"type" : "schedule",
-			"topic" : "boiler2",
-			"field" : "command",
-			"default": 0
-		},
 		"Mt_P" : {
 			"name" : "Mt_P",
 			"type" : "schedule",
@@ -63,25 +49,11 @@
 			"field" : "set_point",
 			"default": 0
 		},
-		"FC_P" : {
-			"name" : "FC_P",
+		"Re_P" : {
+			"name" : "Re_P",
 			"type" : "schedule",
-			"topic" : "fuel_cell",
+			"topic" : "reciprocating_engine",
 			"field" : "set_point",
-			"default": 0
-		},
-		"TS_C" : {
-			"name" : "TS_C",
-			"type" : "schedule",
-			"topic" : "thermal_storage",
-			"field" : "charge_load",
-			"default": 0
-		},
-		"TS_D" : {
-			"name" : "TS_D",
-			"type" : "schedule",
-			"topic" : "thermal_storage",
-			"field" : "discharge_load",
 			"default": 0
 		},
 		"Bat_Ch" : {
@@ -105,13 +77,6 @@
 			"name" : "EMS",
 			"type" : "SOC",
 			"topic" : "devices/battery/all",
-			"field" : "soc",
-			"meta" : {}
-		},
-		"SOC_ts" : {
-			"name" : "EMS",
-			"type" : "SOC_ts",
-			"topic" : "devices/thermal_storage/all",
 			"field" : "soc",
 			"meta" : {}
 		},

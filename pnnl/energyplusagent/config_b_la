@@ -1,7 +1,7 @@
 {
 	"properties" : {
-		"model" : "~/volttron-energyplus/pnnl/energyplusagent/scenario_a/Scenario_A_Opt.idf",
-		"weather" : "~/volttron-energyplus/pnnl/energyplusagent/weather/NY2017-2018.epw",
+		"model" : "~/volttron-energyplus/pnnl/energyplusagent/scenario_b/Scenario_B_Opt_LA.idf",
+		"weather" : "~/volttron-energyplus/pnnl/energyplusagent/weather/USA_CA_Los.Angeles.Intl.AP.722950_TMY3.epw",
 		"bcvtb_home" : "~/volttron-energyplus/bcvtb",
 		"simulation_pause":true, # Only pause after first publish and at the top of every hour to wait for input.
 		"self_advance_interval":20
@@ -21,20 +21,6 @@
 			"field" : "command",
 			"default": 0
 		},	
-		"Ch3_D" : {
-			"name" : "Ch3_D",
-			"type" : "schedule",
-			"topic" : "centrifugal_chiller2",
-			"field" : "command",
-			"default" : 0
-		},
-		"Ch4_D" : {
-			"name" : "Ch4_D",
-			"type" : "schedule",
-			"topic" : "centrifugal_chiller3",
-			"field" : "command",
-			"default" : 0
-		},
 		"Ab_D" : {
 			"name" : "Ab_D",
 			"type" : "schedule",
@@ -49,16 +35,51 @@
 			"field" : "command",
 			"default": 0
 		},
+		"B2_D" : {
+			"name" : "B2_D",
+			"type" : "schedule",
+			"topic" : "boiler1",
+			"field" : "command",
+			"default": 0
+		},
 		"Mt_P" : {
 			"name" : "Mt_P",
 			"type" : "schedule",
 			"topic" : "micro_turbine_generator",
 			"field" : "set_point",
 			"default": 0
+		},
+		"Re_P" : {
+			"name" : "Re_P",
+			"type" : "schedule",
+			"topic" : "reciprocating_engine",
+			"field" : "set_point",
+			"default": 0
+		},
+		"Bat_Ch" : {
+			"name" : "Bat_Ch",
+			"type" : "schedule",
+			"topic" : "battery",
+			"field" : "charge_load",
+			"default": 0
+		},
+		"Bat_Dis" : {
+			"name" : "Bat_Dis",
+			"type" : "schedule",
+			"topic" : "battery",
+			"field" : "discharge_load",
+			"default": 0
 		}
 
 	},
 	"outputs" : {
+		"SOC" : {
+			"name" : "EMS",
+			"type" : "SOC",
+			"topic" : "devices/battery/all",
+			"field" : "soc",
+			"meta" : {}
+		},
 		"month" : {
 			"name" : "EMS",
 			"type" : "currentMonthV"

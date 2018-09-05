@@ -1,0 +1,80 @@
+{
+	"properties" : {
+		"model" : "~/volttron-energyplus/pnnl/energyplusagent/scenario_a/Scenario_A_Opt_NY.idf",
+		"weather" : "~/volttron-energyplus/pnnl/energyplusagent/weather/NY2017-2018.epw",
+		"bcvtb_home" : "~/volttron-energyplus/bcvtb",
+		"simulation_pause":true, # Only pause after first publish and at the top of every hour to wait for input.
+		"self_advance_interval":20
+	},
+	"inputs" : {
+		"Ch1_D" : {
+			"name" : "Ch1_D",
+			"type" : "schedule",
+			"topic" : "centrifugal_chiller0",
+			"field" : "command",
+			"default": 0
+		},
+		"Ch2_D" : {
+			"name" : "Ch2_D",
+			"type" : "schedule",
+			"topic" : "centrifugal_chiller1",
+			"field" : "command",
+			"default": 0
+		},	
+		"Ch3_D" : {
+			"name" : "Ch3_D",
+			"type" : "schedule",
+			"topic" : "centrifugal_chiller2",
+			"field" : "command",
+			"default" : 0
+		},
+		"Ch4_D" : {
+			"name" : "Ch4_D",
+			"type" : "schedule",
+			"topic" : "centrifugal_chiller3",
+			"field" : "command",
+			"default" : 0
+		},
+		"Ab_D" : {
+			"name" : "Ab_D",
+			"type" : "schedule",
+			"topic" : "absorption_chiller",
+			"field" : "command",
+			"default": 0
+		},
+		"B1_D" : {
+			"name" : "B1_D",
+			"type" : "schedule",
+			"topic" : "boiler0",
+			"field" : "command",
+			"default": 0
+		},
+		"Mt_P" : {
+			"name" : "Mt_P",
+			"type" : "schedule",
+			"topic" : "micro_turbine_generator",
+			"field" : "set_point",
+			"default": 0
+		}
+
+	},
+	"outputs" : {
+		"month" : {
+			"name" : "EMS",
+			"type" : "currentMonthV"
+		},
+		"day" : {
+			"name" : "EMS",
+			"type" : "currentDayOfMonthV"
+		},
+		"hour" : {
+			"name" : "EMS",
+			"type" : "currentHourV"
+		},
+		"minute" : {
+			"name" : "EMS",
+			"type" : "currentMinuteV"
+		}
+	}
+}
+
