@@ -31375,8 +31375,8 @@ Pump:VariableSpeed,
     0,                       !- Coefficient 3 of the Part Load Performance Curve
     0,                       !- Coefficient 4 of the Part Load Performance Curve
     0.0,                     !- Design Minimum Flow Rate {m3/s}
-    Intermittent,            !- Pump Control Type
-    HeatingPumpSchedule;     !- Pump Flow Rate Schedule Name
+    Intermittent;            !- Pump Control Type
+
 
 Pump:VariableSpeed,
     CoolSys1 Pump Secondary, !- Name
@@ -33132,10 +33132,6 @@ EnergyManagementSystem:Sensor,
     HeatSys1 Supply Outlet Node,  !- Output:Variable or Output:Meter Index Key Name
     System Node Temperature; !- Output:Variable or Output:Meter Name
 
-EnergyManagementSystem:Sensor,
-    HPS_1,                   !- Name
-    HeatingPumpSchedule,     !- Output:Variable or Output:Meter Index Key Name
-    Schedule Value;          !- Output:Variable or Output:Meter Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:ACTUATOR ===========
@@ -33488,11 +33484,7 @@ EnergyManagementSystem:Actuator,
     Schedule:Constant,       !- Actuated Component Type
     Schedule Value;          !- Actuated Component Control Type
 
-EnergyManagementSystem:Actuator,
-    HPS,                     !- Name
-    HeatingPumpSchedule,     !- Actuated Component Unique Name
-    Schedule:Constant,       !- Actuated Component Type
-    Schedule Value;          !- Actuated Component Control Type
+
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:PROGRAMCALLINGMANAGER ===========
@@ -33584,10 +33576,6 @@ EnergyManagementSystem:ProgramCallingManager,
     InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
     Dispatch_Microturbine;   !- Program Name 1
 
-EnergyManagementSystem:ProgramCallingManager,
-    HotWaterLockout,         !- Name
-    InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
-    HWLoop;                  !- Program Name 1
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:PROGRAM ===========
@@ -34103,17 +34091,7 @@ EnergyManagementSystem:Program,
     SET Microturbine_Dispatch= Mt_P*1000,  !- A9
     ENDIF;                   !- A10
 
-EnergyManagementSystem:Program,
-    HWLoop,                  !- Name
-    IF HPS_1==0,             !- Program Line 1
-    SET Count=Count+1,       !- Program Line 2
-    ENDIF,                   !- A4
-    IF HWT>92 && HPS_1==1,   !- A5
-    SET HPS=0,               !- A6
-    ENDIF,                   !- A7
-    IF Count>60,             !- A8
-    SET HPS=1,               !- A9
-    ENDIF;                   !- A10
+
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:GLOBALVARIABLE ===========
@@ -34696,6 +34674,7 @@ ExternalInterface:Schedule,
     Bat_Dis,                 !- Name
     Any Number,              !- Schedule Type Limits Name
     0;                       !- Initial Value
+
 
 !-   ===========  ALL OBJECTS IN CLASS: AVAILABILITYMANAGER:NIGHTCYCLE ===========
 
@@ -38458,5 +38437,3 @@ Schedule:File,
     8760,                    !- Number of Hours of Data
     Comma,                   !- Column Separator
     No;                      !- Interpolate to Timestep
-
-
