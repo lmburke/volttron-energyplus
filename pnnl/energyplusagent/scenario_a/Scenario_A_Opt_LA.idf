@@ -34558,6 +34558,11 @@ EnergyManagementSystem:InternalVariable,
     LABS_FanDesignMass,      !- Name
     VAV_LABS_Fan,            !- Internal Data Index Key Name
     Fan Maximum Mass Flow Rate;  !- Internal Data Type
+!-   ===========  ALL OBJECTS IN CLASS: EXTERNALINTERFACE ===========
+
+ExternalInterface,
+    PtolemyServer;           !- Name of External Interface
+
 !-   ===========  ALL OBJECTS IN CLASS: EXTERNALINTERFACE:SCHEDULE ===========
 
 ExternalInterface:Schedule,
@@ -38056,227 +38061,232 @@ OutputControl:Table:Style,
 Output:Variable,
     *,                       !- Key Value
     P_Ch1,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     P_Ch2,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     P_Ch3,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_ch1,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_ch2,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_ch3,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     TW1,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     TW2,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     TW3,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     TW4,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     TW5,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     TW6,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     TW7,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     TW8,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     TW9,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     TW10,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     P_Bat,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     SOC,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     P_mt,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     T_mt_exhaust,            !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     M_mt_fuel,               !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     M_mt_exhaust,            !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     P_fc,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    P_RE,                    !- Variable Name
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     T_fc_amb,                !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     FC_hours,                !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     FC_starts,               !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     G_bp1,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     G_bp2,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     G_bp3,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_b1,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_b2,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_b3,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_ab_in,                 !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_ab_out,                !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_ChW,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_HW,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     SOC_ts,                  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     T_OA,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     CurrentMonthV,           !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     CurrentDayOfMonthV,      !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     CurrentHourV,            !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     CurrentMinuteV,          !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_TSC,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_TSD,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     M_fc_fuel,               !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     Electricity_Price,            !- Key Value
