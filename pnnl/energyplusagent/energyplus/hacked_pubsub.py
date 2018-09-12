@@ -208,6 +208,8 @@ class PubSubAgent(Agent):
                         if topics[topic]['values'] is None:
                             topics[topic]['values'] = []
                         topics[topic]['values'].append([value, metadata])
+
+
         for topic, obj in topics.iteritems():
            if obj['values'] is not None:
               for value in obj['values']:
@@ -218,6 +220,8 @@ class PubSubAgent(Agent):
                   out = obj['fields']
                   log.info('Sending: ' + topic + ' ' + str(out))
                   self.vip.pubsub.publish('pubsub', topic, headers, out).get()
+
+        self.vip.pubsub.publish('pubsub', "eplus-simulation", headers, None).get()
 
 
     def on_match_topic(self, peer, sender, bus, topic, headers, message):
