@@ -10,12 +10,12 @@
 ! -----------------------------------------------------------------------
 ! The 90.1 Prototype Building Models were developed by Pacific Northwest National Laboratory (PNNL),
 ! under contract with the U.S. Department of Energy (DOE).  These building models were originally derived from
-! DOE’s Commercial Reference Building Models with modifications from ASHRAE 90.1 committee,
+! DOEï¿½s Commercial Reference Building Models with modifications from ASHRAE 90.1 committee,
 ! Advanced Energy Design Guide series, and other building industry expert input.
 ! The original purpose of developing these prototype building models was to measure energy saving impacts from
 ! newly published editions of ASHRAE Standard 90.1.  The basic building descriptions can be found in the Scorecards
 ! posted at this website.  The detailed descriptions of the prototype model development and addenda modeling
-! strategies can be found in PNNL’s reports, entitled "Achieving 30% Goal: Energy and Cost Saving Analysis
+! strategies can be found in PNNLï¿½s reports, entitled "Achieving 30% Goal: Energy and Cost Saving Analysis
 ! of ASHRAE/IES Standard 90.1-2010" and "Enhancements to ASHRAE Standard 90.1 Prototype Building Models",
 ! both posted at this website.
 ! -----------------------------------------------------------------------
@@ -315,9 +315,9 @@ SizingPeriod:DesignDay,
 
 RunPeriod,
     Annual,                  !- Name
-    6,                       !- Begin Month
+    1,                       !- Begin Month
     1,                       !- Begin Day of Month
-    6,                      !- End Month
+    12,                      !- End Month
     30,                      !- End Day of Month
     Monday,                  !- Day of Week for Start Day
     No,                      !- Use Weather File Holidays and Special Days
