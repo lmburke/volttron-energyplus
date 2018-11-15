@@ -391,12 +391,7 @@ RunPeriodControl:SpecialDays,
     Holiday;                 !- Special Day Type
 
 
-!-   ===========  ALL OBJECTS IN CLASS: RUNPERIODCONTROL:DAYLIGHTSAVINGTIME ===========
 
-! Daylight Saving Period in US
-RunPeriodControl:DaylightSavingTime,
-    2nd Sunday in March,     !- Start Date
-    1st Sunday in November;  !- End Date
 
 
 !-   ===========  ALL OBJECTS IN CLASS: SITE:WATERMAINSTEMPERATURE ===========
@@ -31697,7 +31692,7 @@ DistrictHeating,
     Fuel Cell Waste Heat,    !- Name
     Fuel Cell Waste Heat Water Inlet,  !- Hot Water Inlet Node Name
     Fuel Cell Waste Heat Water Outlet,  !- Hot Water Outlet Node Name
-    200000,                  !- Nominal Capacity {W}
+    2400000,                  !- Nominal Capacity {W}
     Fuel Cell Waste Heat Schedule;  !- Capacity Fraction Schedule Name
 
 
@@ -32027,30 +32022,30 @@ PlantEquipmentList,
 
 PlantEquipmentList,
     Stage 1 Heating,         !- Name
-    DistrictHeating,         !- Equipment 1 Object Type
-    Fuel Cell Waste Heat,    !- Equipment 1 Name
     Boiler:HotWater,         !- Equipment 2 Object Type
-    HeatSys1 Boiler;         !- Equipment 2 Name
+    HeatSys1 Boiler,         !- Equipment 2 Name
+	DistrictHeating,         !- Equipment 1 Object Type
+    Fuel Cell Waste Heat;    !- Equipment 1 Name
 
 PlantEquipmentList,
     Stage 2 Heating,         !- Name
-    DistrictHeating,         !- Equipment 1 Object Type
-    Fuel Cell Waste Heat,    !- Equipment 1 Name
     Boiler:HotWater,         !- Equipment 2 Object Type
     HeatSys1 Boiler,         !- Equipment 2 Name
     Boiler:HotWater,         !- Equipment 3 Object Type
-    HeatSys1 Boiler2;        !- Equipment 3 Name
+    HeatSys1 Boiler2,       !- Equipment 3 Name
+	DistrictHeating,         !- Equipment 1 Object Type
+    Fuel Cell Waste Heat;    !- Equipment 1 Name
 
 PlantEquipmentList,
     Stage 3 Heating,         !- Name
-    DistrictHeating,         !- Equipment 1 Object Type
-    Fuel Cell Waste Heat,    !- Equipment 1 Name
     Boiler:HotWater,         !- Equipment 2 Object Type
     HeatSys1 Boiler,         !- Equipment 2 Name
     Boiler:HotWater,         !- Equipment 3 Object Type
     HeatSys1 Boiler2,        !- Equipment 3 Name
     Boiler:HotWater,         !- Equipment 4 Object Type
-    HeatSys1 Boiler3;        !- Equipment 4 Name
+    HeatSys1 Boiler3,        !- Equipment 4 Name
+	DistrictHeating,         !- Equipment 1 Object Type
+    Fuel Cell Waste Heat;    !- Equipment 1 Name
 
 PlantEquipmentList,
     Stage 4 Heating,         !- Name
@@ -33548,7 +33543,8 @@ EnergyManagementSystem:ProgramCallingManager,
 EnergyManagementSystem:ProgramCallingManager,
     CHWS_Dispatch,           !- Name
     AfterPredictorBeforeHVACManagers,  !- EnergyPlus Model Calling Point
-    ChilledWaterSystemDispatch;  !- Program Name 1
+    ChilledWaterSystemDispatch,  !- Program Name 1
+    HotWaterSystemDispatch;  !- Program Name 2
 
 EnergyManagementSystem:ProgramCallingManager,
     CHWS_Dispatch2,          !- Name
@@ -33559,7 +33555,8 @@ EnergyManagementSystem:ProgramCallingManager,
     Get_Sensors,             !- Name
     EndOfSystemTimestepAfterHVACReporting,  !- EnergyPlus Model Calling Point
     FuelCell_Tracking,       !- Program Name 1
-    VOLTTRON_Sensors;        !- Program Name 2
+    VOLTTRON_Sensors,        !- Program Name 2
+    StartUpCosts;            !- Program Name 3
 
 EnergyManagementSystem:ProgramCallingManager,
     PCM1,                    !- Name
@@ -33968,13 +33965,14 @@ EnergyManagementSystem:Program,
 !SET H_HW= @HFnTdbW THW 0.095,
 EnergyManagementSystem:Program,
     FuelCellWasteHeat,       !- Name
-    SET Eff=0.2007-(0.0047*PLF*PLF*PLF)-(0.2408*PLF*PLF)+0.4153*PLF,  !- Program Line 1
-    SET PLF= P_fuelCell/600000,  !- Program Line 2
+    SET PLF= P_fuelCell/600000,  !- Program Line 1
+    SET Eff=0.2007-(0.0047*PLF*PLF*PLF)-(0.2408*PLF*PLF)+0.4153*PLF,  !- Program Line 2
     SET ExhaustTemp = 752-(631.72*PLF*PLF*PLF)+(1760.6*PLF*PLF)-1706*PLF,  !- A4
-    SET ExhaustEff= (ExhaustTemp-THW)/(ExhaustTemp-T_OA),  !- A5
-    SET WasteHeat=P_fuelCell*(1-Eff)/Eff,  !- A6
+	 SET WasteHeat=P_fuelCell*(1-Eff)/Eff,  !- A5
+    SET ExhaustEff= (ExhaustTemp-THW)/(ExhaustTemp-T_OA),  !- A6
     SET WasteHeat=WasteHeat*ExhaustEff,  !- A7
     SET FC_Cap_A=WasteHeat/2400000;  !- A8
+
 
 !SET P_Building=(P_Total/1000)-P_ch1-P_Ch2-P_Ch3,
 !SET P_solar=P_solarX/1000,
@@ -38437,3 +38435,206 @@ Schedule:File,
     8760,                    !- Number of Hours of Data
     Comma,                   !- Column Separator
     No;                      !- Interpolate to Timestep
+	
+	
+	Schedule:Constant,
+    M_ab,                    !- Name
+    Fraction,                !- Schedule Type Limits Name
+    1;                       !- Hourly Value
+
+Schedule:Constant,
+    M_ch1,                   !- Name
+    Fraction,                !- Schedule Type Limits Name
+    1;                       !- Hourly Value
+
+Schedule:Constant,
+    M_ch2,                   !- Name
+    Fraction,                !- Schedule Type Limits Name
+    1;                       !- Hourly Value
+
+Schedule:Constant,
+    M_ch3,                   !- Name
+    Fraction,                !- Schedule Type Limits Name
+    1;                       !- Hourly Value
+
+Schedule:Constant,
+    M_hw1,                   !- Name
+    Fraction,                !- Schedule Type Limits Name
+    1;                       !- Hourly Value
+
+Schedule:Constant,
+    M_hw2,                   !- Name
+    Fraction,                !- Schedule Type Limits Name
+    1;                       !- Hourly Value
+
+Schedule:Constant,
+    M_hw3,                   !- Name
+    Fraction,                !- Schedule Type Limits Name
+    1;                       !- Hourly Value
+
+Schedule:Constant,
+    P_mtX,                   !- Name
+    Fraction,                !- Schedule Type Limits Name
+    1;                       !- Hourly Value
+
+Schedule:Constant,
+    P_REX,                   !- Name
+    Fraction,                !- Schedule Type Limits Name
+    1;                       !- Hourly Value
+
+Schedule:Constant,
+    Start_Up_Costs,          !- Name
+    Any Number,              !- Schedule Type Limits Name
+    0;                       !- Hourly Value
+	
+	EnergyManagementSystem:Sensor,
+    M_ab_1,                  !- Name
+    M_ab,                    !- Output:Variable or Output:Meter Index Key Name
+    Schedule Value;          !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+    M_ch1_1,                 !- Name
+    M_ch1,                   !- Output:Variable or Output:Meter Index Key Name
+    Schedule Value;          !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+    M_ch2_1,                 !- Name
+    M_ch2,                   !- Output:Variable or Output:Meter Index Key Name
+    Schedule Value;          !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+    M_hw1_1,                 !- Name
+    M_hw1,                   !- Output:Variable or Output:Meter Index Key Name
+    Schedule Value;          !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+    M_hw2_1,                 !- Name
+    M_hw2,                   !- Output:Variable or Output:Meter Index Key Name
+    Schedule Value;          !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+    M_hw3_1,                 !- Name
+    M_hw3,                   !- Output:Variable or Output:Meter Index Key Name
+    Schedule Value;          !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+    P_mtX_1,                 !- Name
+    P_mtX,                   !- Output:Variable or Output:Meter Index Key Name
+    Schedule Value;          !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+    P_REX_1,                 !- Name
+    P_REX,                   !- Output:Variable or Output:Meter Index Key Name
+    Schedule Value;          !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+    M_ch3_1,                 !- Name
+    M_ch3,                   !- Output:Variable or Output:Meter Index Key Name
+    Schedule Value;          !- Output:Variable or Output:Meter Name
+
+	EnergyManagementSystem:Actuator,
+    M_ab_1A,                 !- Name
+    M_ab,                    !- Actuated Component Unique Name
+    Schedule:Constant,       !- Actuated Component Type
+    Schedule Value;          !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    M_ch1_1A,                !- Name
+    M_ch1,                   !- Actuated Component Unique Name
+    Schedule:Constant,       !- Actuated Component Type
+    Schedule Value;          !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    M_ch2_1A,                !- Name
+    M_ch2,                   !- Actuated Component Unique Name
+    Schedule:Constant,       !- Actuated Component Type
+    Schedule Value;          !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    M_ch3_1A,                !- Name
+    M_ch3,                   !- Actuated Component Unique Name
+    Schedule:Constant,       !- Actuated Component Type
+    Schedule Value;          !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    M_hw1_1A,                !- Name
+    M_hw1,                   !- Actuated Component Unique Name
+    Schedule:Constant,       !- Actuated Component Type
+    Schedule Value;          !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    M_hw2_1A,                !- Name
+    M_hw2,                   !- Actuated Component Unique Name
+    Schedule:Constant,       !- Actuated Component Type
+    Schedule Value;          !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    M_hw3_1A,                !- Name
+    M_hw3,                   !- Actuated Component Unique Name
+    Schedule:Constant,       !- Actuated Component Type
+    Schedule Value;          !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    P_mtX_1A,                !- Name
+    P_mtX,                   !- Actuated Component Unique Name
+    Schedule:Constant,       !- Actuated Component Type
+    Schedule Value;          !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    P_REX_1A,                !- Name
+    P_REX,                   !- Actuated Component Unique Name
+    Schedule:Constant,       !- Actuated Component Type
+    Schedule Value;          !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    Costs,                   !- Name
+    Start_Up_Costs,          !- Actuated Component Unique Name
+    Schedule:Constant,       !- Actuated Component Type
+    Schedule Value;          !- Actuated Component Control Type
+	
+	EnergyManagementSystem:Program,
+    StartUpCosts,            !- Name
+    SET Costs=0,             !- Program Line 1
+    IF M_ab>0 && M_ab_1==0,  !- Program Line 2
+    SET Costs=Costs+2,       !- A4
+    ENDIF,                   !- A5
+    IF M_ch1>0 &&M_ch1_1==0, !- A6
+    SET Costs=Costs+15,      !- A7
+    ENDIF,                   !- A8
+    IF M_ch2>0 &&M_ch2_1==0, !- A9
+    SET Costs=Costs+15,      !- A10
+    ENDIF,                   !- A11
+    IF M_ch3>0 &&M_ch3_1==0, !- A12
+    SET Costs=Costs+15,      !- A13
+    ENDIF,                   !- A14
+    IF M_hw1>0 &&M_hw1_1==0, !- A15
+    SET Costs=Costs+0.8,     !- A16
+    ENDIF,                   !- A17
+    IF M_hw2>0 &&M_hw2_1==0, !- A18
+    SET Costs=Costs+0.8,     !- A19
+    ENDIF,                   !- A20
+    IF M_hw3>0 &&M_hw3_1==0, !- A21
+    SET Costs=Costs+0.8,     !- A22
+    ENDIF,                   !- A23
+    IF P_mtX>0 && P_mtX_1==0,!- A24
+    SET Costs=Costs+10,      !- A25
+    ENDIF,                   !- A26
+    IF P_REX>0 && P_REX_1==0,!- A27
+    SET Costs=Costs+10,      !- A28
+    ENDIF,                   !- A29
+    SET Costs=Costs*6,       !- A30
+    SET M_ab_1A=M_ab,        !- A31
+    SET M_ch1_1A=M_ch1,      !- A32
+    SET M_ch2_1A=M_ch2,      !- A33
+    SET M_ch3_1A=M_ch3,      !- A34
+    SET M_hw1_1A=M_hw1,      !- A35
+    SET M_hw2_1A=M_hw2,      !- A36
+    SET M_hw3_1A=M_hw3,      !- A37
+    SET P_mtX_1A=P_mtX,      !- A38
+    SET P_REX_1A=P_REX;      !- A39
+
+	
+	Output:Variable,
+    Start_Up_Costs,          !- Key Value
+    Schedule Value,          !- Variable Name
+    Annual;                  !- Reporting Frequency
