@@ -1,8 +1,8 @@
 {
 	"properties" : {
-		"model" : "~/volttron-energyplus/pnnl/energyplusagent/scenario_a/Scenario_A_Opt_NY.idf",
-		"weather" : "~/volttron-energyplus/pnnl/energyplusagent/weather/NY2017-2018.epw",
-		"bcvtb_home" : "~/volttron-energyplus/bcvtb",
+		"model" : "/vagrant/volttron-energyplus/pnnl/energyplusagent/scenario_a/Scenario_A_Opt_NY.idf",
+		"weather" : "/vagrant/volttron-energyplus/pnnl/energyplusagent/weather/NY2017-2018.epw",
+		"bcvtb_home" : "/vagrant/volttron-energyplus/bcvtb",
 		"simulation_pause":true, # Only pause after first publish and at the top of every hour to wait for input.
 		"self_advance_interval":20
 	},
