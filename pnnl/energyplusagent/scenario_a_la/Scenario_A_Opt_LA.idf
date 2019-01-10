@@ -31715,8 +31715,8 @@ Chiller:Absorption:Indirect,
     35.0,                    !- Design Condenser Inlet Temperature {C}
     10.0,                    !- Condenser Inlet Temperature Lower Limit {C}
     5.0,                     !- Chilled Water Outlet Temperature Lower Limit {C}
-    0.0023,                  !- Design Chilled Water Flow Rate {m3/s}
-    0.0023,                  !- Design Condenser Water Flow Rate {m3/s}
+    0.023,                   !- Design Chilled Water Flow Rate {m3/s}
+    0.03,                    !- Design Condenser Water Flow Rate {m3/s}
     VariableFlow,            !- Chiller Flow Mode
     SteamUseFPLR,            !- Generator Heat Input Function of Part Load Ratio Curve Name
     PumpUseFPLR,             !- Pump Electric Input Function of Part Load Ratio Curve Name
@@ -31738,7 +31738,7 @@ DistrictHeating,
     Fuel Cell Waste Heat,    !- Name
     Fuel Cell Waste Heat Water Inlet,  !- Hot Water Inlet Node Name
     Fuel Cell Waste Heat Water Outlet,  !- Hot Water Outlet Node Name
-    2400000,                  !- Nominal Capacity {W}
+    2,                       !- Nominal Capacity {W}
     Fuel Cell Waste Heat Schedule;  !- Capacity Fraction Schedule Name
 
 
@@ -32068,30 +32068,26 @@ PlantEquipmentList,
 
 PlantEquipmentList,
     Stage 1 Heating,         !- Name
-    Boiler:HotWater,         !- Equipment 2 Object Type
-    HeatSys1 Boiler,         !- Equipment 2 Name
-	DistrictHeating,         !- Equipment 1 Object Type
-    Fuel Cell Waste Heat;    !- Equipment 1 Name
+    Boiler:HotWater,         !- Equipment 1 Object Type
+    HeatSys1 Boiler;         !- Equipment 1 Name
 
 PlantEquipmentList,
     Stage 2 Heating,         !- Name
+    Boiler:HotWater,         !- Equipment 1 Object Type
+    HeatSys1 Boiler,         !- Equipment 1 Name
     Boiler:HotWater,         !- Equipment 2 Object Type
-    HeatSys1 Boiler,         !- Equipment 2 Name
-    Boiler:HotWater,         !- Equipment 3 Object Type
-    HeatSys1 Boiler2,       !- Equipment 3 Name
-	DistrictHeating,         !- Equipment 1 Object Type
-    Fuel Cell Waste Heat;    !- Equipment 1 Name
+    HeatSys1 Boiler2;        !- Equipment 2 Name
+
 
 PlantEquipmentList,
     Stage 3 Heating,         !- Name
+    Boiler:HotWater,         !- Equipment 1 Object Type
+    HeatSys1 Boiler,         !- Equipment 1 Name
     Boiler:HotWater,         !- Equipment 2 Object Type
-    HeatSys1 Boiler,         !- Equipment 2 Name
+    HeatSys1 Boiler2,        !- Equipment 2 Name
     Boiler:HotWater,         !- Equipment 3 Object Type
-    HeatSys1 Boiler2,        !- Equipment 3 Name
-    Boiler:HotWater,         !- Equipment 4 Object Type
-    HeatSys1 Boiler3,        !- Equipment 4 Name
-	DistrictHeating,         !- Equipment 1 Object Type
-    Fuel Cell Waste Heat;    !- Equipment 1 Name
+    HeatSys1 Boiler3;        !- Equipment 3 Name
+
 
 PlantEquipmentList,
     Stage 4 Heating,         !- Name
@@ -34556,12 +34552,6 @@ EnergyManagementSystem:InternalVariable,
     LABS_FanDesignMass,      !- Name
     VAV_LABS_Fan,            !- Internal Data Index Key Name
     Fan Maximum Mass Flow Rate;  !- Internal Data Type
-
-!-   ===========  ALL OBJECTS IN CLASS: EXTERNALINTERFACE ===========
-
-ExternalInterface,
-    PtolemyServer;           !- Name of External Interface
-
 !-   ===========  ALL OBJECTS IN CLASS: EXTERNALINTERFACE:SCHEDULE ===========
 
 ExternalInterface:Schedule,
@@ -34603,7 +34593,7 @@ ExternalInterface:Schedule,
 Schedule:File,
     Electricity_Price,       !- Name
     Any Number,              !- Schedule Type Limits Name
-    ScenarioA_Dispatch_Base1_LA.csv,  !- File Name
+    ScenarioB_Dispatch_Base1_LA.csv,  !- File Name
     16,                      !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
@@ -34613,7 +34603,7 @@ Schedule:File,
 Schedule:File,
     NaturalGas_Price,        !- Name
     Any Number,              !- Schedule Type Limits Name
-    ScenarioA_Dispatch_Base1_LA.csv,  !- File Name
+    ScenarioB_Dispatch_Base1_LA.csv,  !- File Name
     17,                      !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
@@ -34623,7 +34613,7 @@ Schedule:File,
 Schedule:File,
     RTP Schedule,            !- Name
     Any Number,              !- Schedule Type Limits Name
-    ScenarioA_Dispatch_Base1_LA.csv,  !- File Name
+    ScenarioB_Dispatch_Base1_LA.csv,  !- File Name
     16,                      !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
@@ -36442,8 +36432,8 @@ WaterUse:Connections,
 
 Curve:Quadratic,
     Capstone C65 HeatRecoveryRate_vs_PLR,  !- Name
-    0.0,                     !- Coefficient1 Constant
-    1.0,                     !- Coefficient2 x
+    1,                       !- Coefficient1 Constant
+    0,                       !- Coefficient2 x
     0.0,                     !- Coefficient3 x**2
     0.03,                    !- Minimum Value of x
     1.0;                     !- Maximum Value of x
@@ -38088,230 +38078,107 @@ OutputControl:Table:Style,
 Output:Variable,
     *,                       !- Key Value
     P_Ch1,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     P_Ch2,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     P_Ch3,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
-
+    Hourly;                !- Reporting Frequency
 Output:Variable,
     *,                       !- Key Value
     Q_ch1,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_ch2,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_ch3,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
-Output:Variable,
-    *,                       !- Key Value
-    TW1,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    TW2,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    TW3,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    TW4,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    TW5,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    TW6,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    TW7,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    TW8,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    TW9,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    TW10,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    P_Bat,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    SOC,                     !- Variable Name
-    Timestep;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     P_mt,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     T_mt_exhaust,            !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     M_mt_fuel,               !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     M_mt_exhaust,            !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
-Output:Variable,
-    *,                       !- Key Value
-    P_fc,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
 
-Output:Variable,
-    *,                       !- Key Value
-    T_fc_amb,                !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    FC_hours,                !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    FC_starts,               !- Variable Name
-    Timestep;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     G_bp1,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     G_bp2,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     G_bp3,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_b1,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_b2,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_b3,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_ab_in,                 !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_ab_out,                !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_ChW,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Q_HW,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
-    *,                       !- Key Value
-    SOC_ts,                  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    T_OA,                    !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    CurrentMonthV,           !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    CurrentDayOfMonthV,      !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    CurrentHourV,            !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    CurrentMinuteV,          !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Q_TSC,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Q_TSD,                   !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    M_fc_fuel,               !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    Electricity_Price,            !- Key Value
+    Electricity_Price,       !- Key Value
     schedule value,          !- Variable Name
     Hourly;                  !- Reporting Frequency
 
@@ -38320,7 +38187,120 @@ Output:Variable,
     Site Outdoor Air Drybulb Temperature,  !- Variable Name
     Hourly;                  !- Reporting Frequency
 
+Output:Variable,
+    *,                       !- Key Value
+    electricity:facility,    !- Variable Name
+    Hourly;                  !- Reporting Frequency
 
+Output:Variable,
+    *,                       !- Key Value
+    El_bldg,                 !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    fuelcell_Dispatch,       !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Battery_Charge,          !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Battery_Discharge,       !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Mt_P,                    !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Generators,              !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Microturbine_Dispatch,   !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Facility Total Purchased Electric Power,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Facility Total Surplus Electric Power,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Facility Total Produced Electric Power,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Facility Total Purchased Electric Power,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Facility Total Surplus Electric Power,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Facility Total Produced Electric Power,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    Start_Up_Costs,          !- Key Value
+    Schedule Value,          !- Variable Name
+    Annual;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Generator Fuel HHV Basis Rate,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Chiller Evaporator Cooling Rate,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Generator Heat Recovery Inlet Temperature,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Generator Heat Recovery Outlet Temperature,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Generator Heat Recovery Water Mass Flow Rate,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    HeatSys1 Demand Inlet Node,  !- Key Value
+    System Node Temperature, !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    HeatSys1 Demand Outlet Node,  !- Key Value
+    System Node Temperature, !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    HeatSys1 Demand Outlet Node,  !- Key Value
+    System Node Mass Flow Rate,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:METER ===========
 
 Output:Meter,
