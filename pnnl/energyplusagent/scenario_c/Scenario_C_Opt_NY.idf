@@ -246,17 +246,17 @@ ConvergenceLimits,
 ! /tools/bin/ddy2idf /phome/weather/EnergyPlus/tmy3.new/all/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.ddy
 !
 Site:Location,
-    Chicago Ohare Intl Ap_IL_USA Design_Conditions,  !- Name
-    41.98,                   !- Latitude {deg}
-    -87.92,                  !- Longitude {deg}
-    -6.0,                    !- Time Zone {hr}
-    201.00;                  !- Elevation {m}
+    New York Design_Conditions,  !- Name
+    40.7128,                   !- Latitude {deg}
+    -74.0060,                  !- Longitude {deg}
+    -0.0,                    !- Time Zone {hr}
+    33.0;                  !- Elevation {m}
 
 
 !-   ===========  ALL OBJECTS IN CLASS: SIZINGPERIOD:DESIGNDAY ===========
 
 SizingPeriod:DesignDay,
-    Chicago Ohare Intl Ap Ann Htg 99.6% Condns DB,  !- Name
+    New York Ann Htg 99.6% Condns DB,  !- Name
     1,                       !- Month
     21,                      !- Day of Month
     WinterDesignDay,         !- Day Type
@@ -284,7 +284,7 @@ SizingPeriod:DesignDay,
     0.00;                    !- Sky Clearness
 
 SizingPeriod:DesignDay,
-    Chicago Ohare Intl Ap Ann Clg .4% Condns DB=>MWB,  !- Name
+    New York Ann Clg .4% Condns DB=>MWB,  !- Name
     7,                       !- Month
     21,                      !- Day of Month
     SummerDesignDay,         !- Day Type
@@ -31669,8 +31669,8 @@ Chiller:Absorption:Indirect,
     35.0,                    !- Design Condenser Inlet Temperature {C}
     10.0,                    !- Condenser Inlet Temperature Lower Limit {C}
     5.0,                     !- Chilled Water Outlet Temperature Lower Limit {C}
-    0.0011,                  !- Design Chilled Water Flow Rate {m3/s}
-    0.0011,                  !- Design Condenser Water Flow Rate {m3/s}
+    0.03,                  !- Design Chilled Water Flow Rate {m3/s}
+    0.03,                  !- Design Condenser Water Flow Rate {m3/s}
     VariableFlow,            !- Chiller Flow Mode
     SteamUseFPLR,            !- Generator Heat Input Function of Part Load Ratio Curve Name
     PumpUseFPLR,             !- Pump Electric Input Function of Part Load Ratio Curve Name
@@ -31977,7 +31977,7 @@ PlantLoop,
     CoolSys1 Demand Outlet Node,  !- Demand Side Outlet Node Name
     CoolSys1 Demand Branches,!- Demand Side Branch List Name
     CoolSys1 Demand Connectors,  !- Demand Side Connector List Name
-    UniformLoad,             !- Load Distribution Scheme
+    UniformPLR,             !- Load Distribution Scheme
     ,                        !- Availability Manager List Name
     ,                        !- Plant Loop Demand Calculation Scheme
     TwoWayCommonPipe;        !- Common Pipe Simulation

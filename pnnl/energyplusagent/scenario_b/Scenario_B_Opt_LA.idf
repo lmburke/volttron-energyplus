@@ -1,4 +1,4 @@
-!-Generator IDFEditor 1.48
+﻿!-Generator IDFEditor 1.48
 !-Option SortedOrder
 
 !-NOTE: All comments with '!-' are ignored by the IDFEditor and are generated automatically.
@@ -243,10 +243,10 @@ ConvergenceLimits,
 !-   ===========  ALL OBJECTS IN CLASS: SITE:LOCATION ===========
 
 ! Site:Location and design-day objects created by:
-! /tools/bin/ddy2idf /phome/weather/EnergyPlus/tmy3.new/all/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.ddy
+! /tools/bin/ddy2idf /phome/weather/EnergyPlus/tmy3.new/all/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.ddyUSA_CA_Los.Angeles.Intl.AP.722950_TMY3.epw
 !
 Site:Location,
-    Chicago Ohare Intl Ap_IL_USA Design_Conditions,  !- Name
+    Los Angeles Intl Ap_IL_USA Design_Conditions,  !- Name
     41.98,                   !- Latitude {deg}
     -87.92,                  !- Longitude {deg}
     -6.0,                    !- Time Zone {hr}
@@ -256,59 +256,59 @@ Site:Location,
 !-   ===========  ALL OBJECTS IN CLASS: SIZINGPERIOD:DESIGNDAY ===========
 
 SizingPeriod:DesignDay,
-    Chicago Ohare Intl Ap Ann Htg 99.6% Condns DB,  !- Name
-    1,                       !- Month
-    21,                      !- Day of Month
-    WinterDesignDay,         !- Day Type
-    -20,                     !- Maximum Dry-Bulb Temperature {C}
-    0.0,                     !- Daily Dry-Bulb Temperature Range {deltaC}
-    DefaultMultipliers,      !- Dry-Bulb Temperature Range Modifier Type
-    ,                        !- Dry-Bulb Temperature Range Modifier Day Schedule Name
-    Wetbulb,                 !- Humidity Condition Type
-    -20,                     !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
-    ,                        !- Humidity Condition Day Schedule Name
-    ,                        !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
-    ,                        !- Enthalpy at Maximum Dry-Bulb {J/kg}
-    ,                        !- Daily Wet-Bulb Temperature Range {deltaC}
-    98934.,                  !- Barometric Pressure {Pa}
-    4.9,                     !- Wind Speed {m/s}
-    270,                     !- Wind Direction {deg}
-    No,                      !- Rain Indicator
-    No,                      !- Snow Indicator
-    No,                      !- Daylight Saving Time Indicator
-    ASHRAEClearSky,          !- Solar Model Indicator
-    ,                        !- Beam Solar Day Schedule Name
-    ,                        !- Diffuse Solar Day Schedule Name
-    ,                        !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub) {dimensionless}
-    ,                        !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud) {dimensionless}
-    0.00;                    !- Sky Clearness
+  Los Angeles Intl Arpt Ann Htg 99.6% Condns DB,     !- Name
+          1,      !- Month
+         21,      !- Day of Month
+  WinterDesignDay,!- Day Type
+        6.9,      !- Maximum Dry-Bulb Temperature {C}
+        0.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+        6.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily WetBulb Temperature Range {deltaC}
+    100965.,      !- Barometric Pressure {Pa}
+        2.4,      !- Wind Speed {m/s} design conditions vs. traditional 6.71 m/s (15 mph)
+         90,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+  ASHRAEClearSky, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+           ,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+           ,      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+       0.00;      !- Clearness {0.0 to 1.1}
 
 SizingPeriod:DesignDay,
-    Chicago Ohare Intl Ap Ann Clg .4% Condns DB=>MWB,  !- Name
-    7,                       !- Month
-    21,                      !- Day of Month
-    SummerDesignDay,         !- Day Type
-    33.3,                    !- Maximum Dry-Bulb Temperature {C}
-    10.5,                    !- Daily Dry-Bulb Temperature Range {deltaC}
-    DefaultMultipliers,      !- Dry-Bulb Temperature Range Modifier Type
-    ,                        !- Dry-Bulb Temperature Range Modifier Day Schedule Name
-    Wetbulb,                 !- Humidity Condition Type
-    23.7,                    !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
-    ,                        !- Humidity Condition Day Schedule Name
-    ,                        !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
-    ,                        !- Enthalpy at Maximum Dry-Bulb {J/kg}
-    ,                        !- Daily Wet-Bulb Temperature Range {deltaC}
-    98934.,                  !- Barometric Pressure {Pa}
-    5.2,                     !- Wind Speed {m/s}
-    230,                     !- Wind Direction {deg}
-    No,                      !- Rain Indicator
-    No,                      !- Snow Indicator
-    No,                      !- Daylight Saving Time Indicator
-    ASHRAETau,               !- Solar Model Indicator
-    ,                        !- Beam Solar Day Schedule Name
-    ,                        !- Diffuse Solar Day Schedule Name
-    0.455,                   !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub) {dimensionless}
-    2.050;                   !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud) {dimensionless}
+  Los Angeles Intl Arpt Ann Clg .4% Condns DB=>MWB,     !- Name
+          8,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       28.7,      !- Maximum Dry-Bulb Temperature {C}
+          6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily WetBulb Temperature Range {deltaC}
+    100965.,      !- Barometric Pressure {Pa}
+        4.1,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        250,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+       ASHRAETau, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.440,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.108;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
 
 
 !-   ===========  ALL OBJECTS IN CLASS: RUNPERIOD ===========
@@ -318,7 +318,7 @@ RunPeriod,
     1,                       !- Begin Month
     1,                       !- Begin Day of Month
     12,                      !- End Month
-    30,                      !- End Day of Month
+    31,                      !- End Day of Month
     Monday,                  !- Day of Week for Start Day
     No,                      !- Use Weather File Holidays and Special Days
     No,                      !- Use Weather File Daylight Saving Period
@@ -31733,8 +31733,8 @@ Chiller:Absorption:Indirect,
     35.0,                    !- Design Condenser Inlet Temperature {C}
     10.0,                    !- Condenser Inlet Temperature Lower Limit {C}
     5.0,                     !- Chilled Water Outlet Temperature Lower Limit {C}
-    0.0027,                  !- Design Chilled Water Flow Rate {m3/s}
-    0.0027,                  !- Design Condenser Water Flow Rate {m3/s}
+    0.03,                  !- Design Chilled Water Flow Rate {m3/s}
+    0.03,                  !- Design Condenser Water Flow Rate {m3/s}
     VariableFlow,            !- Chiller Flow Mode
     SteamUseFPLR,            !- Generator Heat Input Function of Part Load Ratio Curve Name
     PumpUseFPLR,             !- Pump Electric Input Function of Part Load Ratio Curve Name
@@ -32041,7 +32041,7 @@ PlantLoop,
     CoolSys1 Demand Outlet Node,  !- Demand Side Outlet Node Name
     CoolSys1 Demand Branches,!- Demand Side Branch List Name
     CoolSys1 Demand Connectors,  !- Demand Side Connector List Name
-    UniformLoad,             !- Load Distribution Scheme
+    UniformPLR,             !- Load Distribution Scheme
     ,                        !- Availability Manager List Name
     ,                        !- Plant Loop Demand Calculation Scheme
     TwoWayCommonPipe;        !- Common Pipe Simulation

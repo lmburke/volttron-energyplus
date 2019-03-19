@@ -249,7 +249,7 @@ Site:Location,
     Chicago Ohare Intl Ap_IL_USA Design_Conditions,  !- Name
     41.98,                   !- Latitude {deg}
     -87.92,                  !- Longitude {deg}
-    -6.0,                    !- Time Zone {hr}
+    -0.0,                    !- Time Zone {hr}
     201.00;                  !- Elevation {m}
 
 
@@ -317,8 +317,8 @@ RunPeriod,
     Annual,                  !- Name
     1,                       !- Begin Month
     1,                       !- Begin Day of Month
-    12,                      !- End Month
-    31,                      !- End Day of Month
+    1,                      !- End Month
+    7,                      !- End Day of Month
     Monday,                  !- Day of Week for Start Day
     No,                      !- Use Weather File Holidays and Special Days
     No,                      !- Use Weather File Daylight Saving Period
@@ -435,7 +435,7 @@ ScheduleTypeLimits,
 
 ScheduleTypeLimits,
     Humidity,                !- Name
-    10,                      !- Lower Limit Value
+    0,                      !- Lower Limit Value
     90,                      !- Upper Limit Value
     Continuous;              !- Numeric Type
 
@@ -31715,8 +31715,8 @@ Chiller:Absorption:Indirect,
     35.0,                    !- Design Condenser Inlet Temperature {C}
     10.0,                    !- Condenser Inlet Temperature Lower Limit {C}
     5.0,                     !- Chilled Water Outlet Temperature Lower Limit {C}
-    0.0023,                  !- Design Chilled Water Flow Rate {m3/s}
-    0.0023,                  !- Design Condenser Water Flow Rate {m3/s}
+    0.03,                  !- Design Chilled Water Flow Rate {m3/s}
+    0.03,                  !- Design Condenser Water Flow Rate {m3/s}
     VariableFlow,            !- Chiller Flow Mode
     SteamUseFPLR,            !- Generator Heat Input Function of Part Load Ratio Curve Name
     PumpUseFPLR,             !- Pump Electric Input Function of Part Load Ratio Curve Name
@@ -32023,7 +32023,7 @@ PlantLoop,
     CoolSys1 Demand Outlet Node,  !- Demand Side Outlet Node Name
     CoolSys1 Demand Branches,!- Demand Side Branch List Name
     CoolSys1 Demand Connectors,  !- Demand Side Connector List Name
-    UniformLoad,             !- Load Distribution Scheme
+    UniformPLR,             !- Load Distribution Scheme
     ,                        !- Availability Manager List Name
     ,                        !- Plant Loop Demand Calculation Scheme
     TwoWayCommonPipe;        !- Common Pipe Simulation
@@ -32681,11 +32681,6 @@ EnergyManagementSystem:Sensor,
     System Node Mass Flow Rate;  !- Output:Variable or Output:Meter Name
 
 EnergyManagementSystem:Sensor,
-    P_ch4x,                  !- Name
-    CoolSys1 Chiller4,       !- Output:Variable or Output:Meter Index Key Name
-    Chiller Electric Power;  !- Output:Variable or Output:Meter Name
-
-EnergyManagementSystem:Sensor,
     M_ch1,                   !- Name
     CoolSys1 Supply Equipment Outlet Node 1,  !- Output:Variable or Output:Meter Index Key Name
     System Node Mass Flow Rate;  !- Output:Variable or Output:Meter Name
@@ -32921,6 +32916,11 @@ EnergyManagementSystem:Sensor,
     CoolSys1 Chiller3,       !- Output:Variable or Output:Meter Index Key Name
     Chiller Electric Power;  !- Output:Variable or Output:Meter Name
 
+EnergyManagementSystem:Sensor,
+    P_ch4x,                  !- Name
+    CoolSys1 Chiller4,       !- Output:Variable or Output:Meter Index Key Name
+    Chiller Electric Power;  !- Output:Variable or Output:Meter Name
+
 ! Chilled Cooling Output
 EnergyManagementSystem:Sensor,
     Q_ch1x,                  !- Name
@@ -32935,6 +32935,11 @@ EnergyManagementSystem:Sensor,
 EnergyManagementSystem:Sensor,
     Q_ch3x,                  !- Name
     CoolSys1 Chiller3,       !- Output:Variable or Output:Meter Index Key Name
+    Chiller Evaporator Cooling Rate;  !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+    Q_ch4x,                  !- Name
+    CoolSys1 Chiller4,       !- Output:Variable or Output:Meter Index Key Name
     Chiller Evaporator Cooling Rate;  !- Output:Variable or Output:Meter Name
 
 ! Battery Power
@@ -34017,9 +34022,11 @@ EnergyManagementSystem:Program,
     SET P_ch1=P_ch1x/1000,   !- Program Line 1
     SET P_ch2=P_ch2x/1000,   !- Program Line 2
     SET P_ch3=P_ch3x/1000,   !- A4
+    SET P_ch4=P_ch4x/1000,   !- A5
     SET Q_ch1=Q_ch1x/1000*0.284345,  !- A5
     SET Q_ch2=Q_ch2x/1000*0.284345,  !- A6
     SET Q_ch3=Q_ch3x/1000*0.284345,  !- A7
+    SET Q_ch4=Q_ch4x/1000*0.284345,  !- A9
     SET G_bp1=G_bp1x*3.414/1000000,  !- A8
     SET G_bp2=G_bp2x*3.414/1000000,  !- A9
     SET G_bp3=G_bp3x*3.414/1000000,  !- A10
@@ -34227,6 +34234,13 @@ EnergyManagementSystem:OutputVariable,
 EnergyManagementSystem:OutputVariable,
     P_ch3,                   !- Name
     P_ch3,                   !- EMS Variable Name
+    Averaged,                !- Type of Data in Variable
+    SystemTimestep,          !- Update Frequency
+    VOLTTRON_Sensors;        !- EMS Program or Subroutine Name
+
+EnergyManagementSystem:OutputVariable,
+    P_ch4,                   !- Name
+    P_ch4,                   !- EMS Variable Name
     Averaged,                !- Type of Data in Variable
     SystemTimestep,          !- Update Frequency
     VOLTTRON_Sensors;        !- EMS Program or Subroutine Name
@@ -36436,8 +36450,8 @@ WaterUse:Connections,
 
 Curve:Quadratic,
     Capstone C65 HeatRecoveryRate_vs_PLR,  !- Name
-    0.0,                     !- Coefficient1 Constant
-    1.0,                     !- Coefficient2 x
+    1.0,                     !- Coefficient1 Constant
+    0.0,                     !- Coefficient2 x
     0.0,                     !- Coefficient3 x**2
     0.03,                    !- Minimum Value of x
     1.0;                     !- Maximum Value of x
@@ -38766,4 +38780,7 @@ EnergyManagementSystem:Actuator,
     Start_Up_Costs,          !- Key Value
     Schedule Value,          !- Variable Name
     Annual;                  !- Reporting Frequency
+
+ExternalInterface,
+    PtolemyServer;           !- Name of External Interface
 

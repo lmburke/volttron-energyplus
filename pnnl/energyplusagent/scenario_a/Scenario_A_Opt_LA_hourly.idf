@@ -246,79 +246,79 @@ ConvergenceLimits,
 ! /tools/bin/ddy2idf /phome/weather/EnergyPlus/tmy3.new/all/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.ddy
 !
 Site:Location,
-    Chicago Ohare Intl Ap_IL_USA Design_Conditions,  !- Name
+    Los Angeles Intl Ap_IL_USA Design_Conditions,  !- Name
     41.98,                   !- Latitude {deg}
     -87.92,                  !- Longitude {deg}
-    -6.0,                    !- Time Zone {hr}
+    -3.0,                    !- Time Zone {hr}
     201.00;                  !- Elevation {m}
 
 
 !-   ===========  ALL OBJECTS IN CLASS: SIZINGPERIOD:DESIGNDAY ===========
 
 SizingPeriod:DesignDay,
-    Chicago Ohare Intl Ap Ann Htg 99.6% Condns DB,  !- Name
-    1,                       !- Month
-    21,                      !- Day of Month
-    WinterDesignDay,         !- Day Type
-    -20,                     !- Maximum Dry-Bulb Temperature {C}
-    0.0,                     !- Daily Dry-Bulb Temperature Range {deltaC}
-    DefaultMultipliers,      !- Dry-Bulb Temperature Range Modifier Type
-    ,                        !- Dry-Bulb Temperature Range Modifier Day Schedule Name
-    Wetbulb,                 !- Humidity Condition Type
-    -20,                     !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
-    ,                        !- Humidity Condition Day Schedule Name
-    ,                        !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
-    ,                        !- Enthalpy at Maximum Dry-Bulb {J/kg}
-    ,                        !- Daily Wet-Bulb Temperature Range {deltaC}
-    98934.,                  !- Barometric Pressure {Pa}
-    4.9,                     !- Wind Speed {m/s}
-    270,                     !- Wind Direction {deg}
-    No,                      !- Rain Indicator
-    No,                      !- Snow Indicator
-    No,                      !- Daylight Saving Time Indicator
-    ASHRAEClearSky,          !- Solar Model Indicator
-    ,                        !- Beam Solar Day Schedule Name
-    ,                        !- Diffuse Solar Day Schedule Name
-    ,                        !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub) {dimensionless}
-    ,                        !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud) {dimensionless}
-    0.00;                    !- Sky Clearness
+  Los Angeles Intl Arpt Ann Htg 99.6% Condns DB,     !- Name
+          1,      !- Month
+         21,      !- Day of Month
+  WinterDesignDay,!- Day Type
+        6.9,      !- Maximum Dry-Bulb Temperature {C}
+        0.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+        6.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily WetBulb Temperature Range {deltaC}
+    100965.,      !- Barometric Pressure {Pa}
+        2.4,      !- Wind Speed {m/s} design conditions vs. traditional 6.71 m/s (15 mph)
+         90,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+  ASHRAEClearSky, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+           ,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+           ,      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+       0.00;      !- Clearness {0.0 to 1.1}
 
 SizingPeriod:DesignDay,
-    Chicago Ohare Intl Ap Ann Clg .4% Condns DB=>MWB,  !- Name
-    7,                       !- Month
-    21,                      !- Day of Month
-    SummerDesignDay,         !- Day Type
-    33.3,                    !- Maximum Dry-Bulb Temperature {C}
-    10.5,                    !- Daily Dry-Bulb Temperature Range {deltaC}
-    DefaultMultipliers,      !- Dry-Bulb Temperature Range Modifier Type
-    ,                        !- Dry-Bulb Temperature Range Modifier Day Schedule Name
-    Wetbulb,                 !- Humidity Condition Type
-    23.7,                    !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
-    ,                        !- Humidity Condition Day Schedule Name
-    ,                        !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
-    ,                        !- Enthalpy at Maximum Dry-Bulb {J/kg}
-    ,                        !- Daily Wet-Bulb Temperature Range {deltaC}
-    98934.,                  !- Barometric Pressure {Pa}
-    5.2,                     !- Wind Speed {m/s}
-    230,                     !- Wind Direction {deg}
-    No,                      !- Rain Indicator
-    No,                      !- Snow Indicator
-    No,                      !- Daylight Saving Time Indicator
-    ASHRAETau,               !- Solar Model Indicator
-    ,                        !- Beam Solar Day Schedule Name
-    ,                        !- Diffuse Solar Day Schedule Name
-    0.455,                   !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub) {dimensionless}
-    2.050;                   !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud) {dimensionless}
+  Los Angeles Intl Arpt Ann Clg .4% Condns DB=>MWB,     !- Name
+          8,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       28.7,      !- Maximum Dry-Bulb Temperature {C}
+          6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily WetBulb Temperature Range {deltaC}
+    100965.,      !- Barometric Pressure {Pa}
+        4.1,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        250,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+       ASHRAETau, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.440,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.108;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
 
 
 !-   ===========  ALL OBJECTS IN CLASS: RUNPERIOD ===========
 
 RunPeriod,
     Annual,                  !- Name
-    7,                       !- Begin Month
+    1,                       !- Begin Month
     1,                       !- Begin Day of Month
-    7,                       !- End Month
-    2,                       !- End Day of Month
+    12,                       !- End Month
+    31,                       !- End Day of Month
     Monday,                  !- Day of Week for Start Day
     No,                      !- Use Weather File Holidays and Special Days
     No,                      !- Use Weather File Daylight Saving Period
@@ -391,6 +391,7 @@ RunPeriodControl:SpecialDays,
     Holiday;                 !- Special Day Type
 
 
+!-   ===========  ALL OBJECTS IN CLASS: RUNPERIODCONTROL:DAYLIGHTSAVINGTIME ===========
 
 
 
@@ -3170,13 +3171,7 @@ Schedule:Compact,
     Until: 24:00,            !- Field 11
     135000;                  !- Field 12
 
-Schedule:Compact,
-    Ch4_D,                   !- Name
-    Fraction,                !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: Weekdays AllOtherDays,  !- Field 2
-    Until: 24:00,            !- Field 3
-    0;                       !- Field 4
+
 
 Schedule:Compact,
     B4_D,                    !- Name
@@ -3201,6 +3196,47 @@ Schedule:Compact,
     For: Weekdays AllOtherDays,  !- Field 2
     Until: 24:00,            !- Field 3
     0;                       !- Field 4
+    
+    Schedule:Compact,
+    Bat_Ch,                    !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays AllOtherDays,  !- Field 2
+    Until: 24:00,            !- Field 3
+    0;                       !- Field 4
+
+Schedule:Compact,
+    Bat_Dis,                    !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays AllOtherDays,  !- Field 2
+    Until: 24:00,            !- Field 3
+    0;                       !- Field 4
+
+Schedule:Compact,
+    TS_C,                    !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays AllOtherDays,  !- Field 2
+    Until: 24:00,            !- Field 3
+    0;                       !- Field 4
+    
+    Schedule:Compact,
+    TS_D,                    !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays AllOtherDays,  !- Field 2
+    Until: 24:00,            !- Field 3
+    0;                       !- Field 4
+    
+        Schedule:Compact,
+    FC_P,                    !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays AllOtherDays,  !- Field 2
+    Until: 24:00,            !- Field 3
+    0;                       !- Field 4
+
 
 
 !-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:CONSTANT ===========
@@ -3342,6 +3378,17 @@ Schedule:Constant,
 
 Schedule:Constant,
     Fuel Cell Hours,         !- Name
+    Any Number,              !- Schedule Type Limits Name
+    0;                       !- Hourly Value
+
+
+Schedule:Constant,
+    B2_D,!- Name
+    Any Number,              !- Schedule Type Limits Name
+    0;                       !- Hourly Value
+
+Schedule:Constant,
+    B3_D,         !- Name
     Any Number,              !- Schedule Type Limits Name
     0;                       !- Hourly Value
 
@@ -31372,7 +31419,6 @@ Pump:VariableSpeed,
     0.0,                     !- Design Minimum Flow Rate {m3/s}
     Intermittent;            !- Pump Control Type
 
-
 Pump:VariableSpeed,
     CoolSys1 Pump Secondary, !- Name
     CoolSys1 Demand Inlet Node,  !- Inlet Node Name
@@ -31467,7 +31513,7 @@ Boiler:HotWater,
 Boiler:HotWater,
     HeatSys1 Boiler2,        !- Name
     NATURALGAS,              !- Fuel Type
-    2343292,                 !- Nominal Capacity {W}
+    1,                       !- Nominal Capacity {W}
     0.7925,                  !- Nominal Thermal Efficiency
     LeavingBoiler,           !- Efficiency Curve Temperature Evaluation Variable
     HeatSys1 Boiler Efficiency Curve,  !- Normalized Boiler Efficiency Curve Name
@@ -31484,7 +31530,7 @@ Boiler:HotWater,
 Boiler:HotWater,
     HeatSys1 Boiler3,        !- Name
     NATURALGAS,              !- Fuel Type
-    2343292,                 !- Nominal Capacity {W}
+    1,                       !- Nominal Capacity {W}
     0.7925,                  !- Nominal Thermal Efficiency
     LeavingBoiler,           !- Efficiency Curve Temperature Evaluation Variable
     HeatSys1 Boiler Efficiency Curve,  !- Normalized Boiler Efficiency Curve Name
@@ -31554,11 +31600,11 @@ Boiler:HotWater,
 
 Chiller:Electric:ReformulatedEIR,
     CoolSys1 Chiller1,       !- Name
-    1757469,                 !- Reference Capacity {W}
+    702694,                  !- Reference Capacity {W}
     7.2,                     !- Reference COP {W/W}
     6.6700,                  !- Reference Leaving Chilled Water Temperature {C}
     34.4444,                 !- Reference Leaving Condenser Water Temperature {C}
-    0.0639,                  !- Reference Chilled Water Flow Rate {m3/s}
+    0.0255,                  !- Reference Chilled Water Flow Rate {m3/s}
     AutoSize,                !- Reference Condenser Water Flow Rate {m3/s}
     WC_PD_2004_CAPFT,        !- Cooling Capacity Function of Temperature Curve Name
     WC_PD_2004_EIRFT,        !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
@@ -31579,11 +31625,11 @@ Chiller:Electric:ReformulatedEIR,
 
 Chiller:Electric:ReformulatedEIR,
     CoolSys1 Chiller2,       !- Name
-    1757469,                 !- Reference Capacity {W}
+    702694,                  !- Reference Capacity {W}
     7.2,                     !- Reference COP {W/W}
     6.6700,                  !- Reference Leaving Chilled Water Temperature {C}
     34.4444,                 !- Reference Leaving Condenser Water Temperature {C}
-    0.0639,                  !- Reference Chilled Water Flow Rate {m3/s}
+    0.0255,                  !- Reference Chilled Water Flow Rate {m3/s}
     AutoSize,                !- Reference Condenser Water Flow Rate {m3/s}
     WC_PD_2004_CAPFT,        !- Cooling Capacity Function of Temperature Curve Name
     WC_PD_2004_EIRFT,        !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
@@ -31604,20 +31650,20 @@ Chiller:Electric:ReformulatedEIR,
 
 Chiller:Electric:ReformulatedEIR,
     CoolSys1 Chiller3,       !- Name
-    468658,                  !- Reference Capacity {W}
+    702694,                  !- Reference Capacity {W}
     4.9,                     !- Reference COP {W/W}
     6.6700,                  !- Reference Leaving Chilled Water Temperature {C}
     34.4444,                 !- Reference Leaving Condenser Water Temperature {C}
-    0.017,                   !- Reference Chilled Water Flow Rate {m3/s}
+    0.0255,                  !- Reference Chilled Water Flow Rate {m3/s}
     AutoSize,                !- Reference Condenser Water Flow Rate {m3/s}
     WC_PD_2004_CAPFT,        !- Cooling Capacity Function of Temperature Curve Name
     WC_PD_2004_EIRFT,        !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
     LeavingCondenserWaterTemperature,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type
     WC_PD_150TO300_2004_EIRFPLR,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
-    0.5,                     !- Minimum Part Load Ratio
+    0.25,                    !- Minimum Part Load Ratio
     1.0000,                  !- Maximum Part Load Ratio
     1,                       !- Optimum Part Load Ratio
-    0.5,                     !- Minimum Unloading Ratio
+    0.25,                    !- Minimum Unloading Ratio
     CoolSys1 Pump-CoolSys1 Chiller3Node,  !- Chilled Water Inlet Node Name
     CoolSys1 Supply Equipment Outlet Node 3,  !- Chilled Water Outlet Node Name
     CoolSys1 Chiller3 Water Inlet Node,  !- Condenser Inlet Node Name
@@ -31629,20 +31675,20 @@ Chiller:Electric:ReformulatedEIR,
 
 Chiller:Electric:ReformulatedEIR,
     CoolSys1 Chiller4,       !- Name
-    1,                       !- Reference Capacity {W}
+    702694,                  !- Reference Capacity {W}
     4.9,                     !- Reference COP {W/W}
     6.6700,                  !- Reference Leaving Chilled Water Temperature {C}
     34.4444,                 !- Reference Leaving Condenser Water Temperature {C}
-    0.000001,                !- Reference Chilled Water Flow Rate {m3/s}
+    0.0255,                  !- Reference Chilled Water Flow Rate {m3/s}
     AutoSize,                !- Reference Condenser Water Flow Rate {m3/s}
     WC_PD_2004_CAPFT,        !- Cooling Capacity Function of Temperature Curve Name
     WC_PD_2004_EIRFT,        !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
     LeavingCondenserWaterTemperature,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type
     WC_PD_150TO300_2004_EIRFPLR,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
-    0.1,                     !- Minimum Part Load Ratio
+    0.25,                    !- Minimum Part Load Ratio
     1.0000,                  !- Maximum Part Load Ratio
     1,                       !- Optimum Part Load Ratio
-    0.1,                     !- Minimum Unloading Ratio
+    0.25,                    !- Minimum Unloading Ratio
     CoolSys1 Pump-CoolSys1 Chiller4Node,  !- Chilled Water Inlet Node Name
     CoolSys1 Supply Equipment Outlet Node 4,  !- Chilled Water Outlet Node Name
     CoolSys1 Chiller4 Water Inlet Node,  !- Condenser Inlet Node Name
@@ -31657,7 +31703,7 @@ Chiller:Electric:ReformulatedEIR,
 
 Chiller:Absorption:Indirect,
     Absorption Chiller,      !- Name
-    219693,                  !- Nominal Capacity {W}
+    463698,                  !- Nominal Capacity {W}
     500,                     !- Nominal Pumping Power {W}
     Absorption Chiller Inlet Node,  !- Chilled Water Inlet Node Name
     Absorption Chiller Outlet Node,  !- Chilled Water Outlet Node Name
@@ -31669,8 +31715,8 @@ Chiller:Absorption:Indirect,
     35.0,                    !- Design Condenser Inlet Temperature {C}
     10.0,                    !- Condenser Inlet Temperature Lower Limit {C}
     5.0,                     !- Chilled Water Outlet Temperature Lower Limit {C}
-    0.0011,                  !- Design Chilled Water Flow Rate {m3/s}
-    0.0011,                  !- Design Condenser Water Flow Rate {m3/s}
+    0.03,                  !- Design Chilled Water Flow Rate {m3/s}
+    0.03,                  !- Design Condenser Water Flow Rate {m3/s}
     VariableFlow,            !- Chiller Flow Mode
     SteamUseFPLR,            !- Generator Heat Input Function of Part Load Ratio Curve Name
     PumpUseFPLR,             !- Pump Electric Input Function of Part Load Ratio Curve Name
@@ -31874,15 +31920,15 @@ WaterHeater:Mixed,
 
 ThermalStorage:ChilledWater:Stratified,
     Chilled Water Thermal Storage,  !- Name
-    606.98,                  !- Tank Volume {m3}
-    7.559,                   !- Tank Height {m}
+    0.005,                   !- Tank Volume {m3}
+    0.2,                     !- Tank Height {m}
     VerticalCylinder,        !- Tank Shape
     ,                        !- Tank Perimeter {m}
     Thermal Storage Setpoint Temperature,  !- Setpoint Temperature Schedule Name
     2.5,                     !- Deadband Temperature Difference {deltaC}
     7.5,                     !- Temperature Sensor Height {m}
     1,                       !- Minimum Temperature Limit {C}
-    1464557,                 !- Nominal Cooling Capacity {W}
+    1,                       !- Nominal Cooling Capacity {W}
     Zone,                    !- Ambient Temperature Indicator
     ,                        !- Ambient Temperature Schedule Name
     Basement,                !- Ambient Temperature Zone Name
@@ -31892,16 +31938,16 @@ ThermalStorage:ChilledWater:Stratified,
     Building Use Chilled Water Node,  !- Use Side Outlet Node Name
     1,                       !- Use Side Heat Transfer Effectiveness
     Thermal Storage Tank Discharge Availability,  !- Use Side Availability Schedule Name
-    7.5,                     !- Use Side Inlet Height {m}
+    0.18,                    !- Use Side Inlet Height {m}
     0.02,                    !- Use Side Outlet Height {m}
-    0.04208,                 !- Use Side Design Flow Rate {m3/s}
+    0.0000001,               !- Use Side Design Flow Rate {m3/s}
     Thermal Storage Charging Node,  !- Source Side Inlet Node Name
     Thermal Storage Charge Return,  !- Source Side Outlet Node Name
     1,                       !- Source Side Heat Transfer Effectiveness
     Thermal Storage Tank Charge Availability,  !- Source Side Availability Schedule Name
     0.02,                    !- Source Side Inlet Height {m}
-    7.5,                     !- Source Side Outlet Height {m}
-    0.04208,                 !- Source Side Design Flow Rate {m3/s}
+    0.18,                    !- Source Side Outlet Height {m}
+    0.0000001,               !- Source Side Design Flow Rate {m3/s}
     6,                       !- Tank Recovery Time {hr}
     Fixed,                   !- Inlet Mode
     10;                      !- Number of Nodes
@@ -31951,7 +31997,7 @@ PlantLoop,
     HeatSys1 Demand Outlet Node,  !- Demand Side Outlet Node Name
     HeatSys1 Demand Branches,!- Demand Side Branch List Name
     HeatSys1 Demand Connectors,  !- Demand Side Connector List Name
-    UniformLoad,             !- Load Distribution Scheme
+    SequentialUniformPLR,    !- Load Distribution Scheme
     ,                        !- Availability Manager List Name
     ,                        !- Plant Loop Demand Calculation Scheme
     None;                    !- Common Pipe Simulation
@@ -31977,7 +32023,7 @@ PlantLoop,
     CoolSys1 Demand Outlet Node,  !- Demand Side Outlet Node Name
     CoolSys1 Demand Branches,!- Demand Side Branch List Name
     CoolSys1 Demand Connectors,  !- Demand Side Connector List Name
-    UniformLoad,             !- Load Distribution Scheme
+    UniformPLR,             !- Load Distribution Scheme
     ,                        !- Availability Manager List Name
     ,                        !- Plant Loop Demand Calculation Scheme
     TwoWayCommonPipe;        !- Common Pipe Simulation
@@ -32634,10 +32680,10 @@ EnergyManagementSystem:Sensor,
     CoolSys1 Demand Outlet Node,  !- Output:Variable or Output:Meter Index Key Name
     System Node Mass Flow Rate;  !- Output:Variable or Output:Meter Name
 
-EnergyManagementSystem:Sensor,
-    P_ch4x,                  !- Name
-    CoolSys1 Chiller4,       !- Output:Variable or Output:Meter Index Key Name
-    Chiller Electric Power;  !- Output:Variable or Output:Meter Name
+!EnergyManagementSystem:Sensor,
+!    P_ch4x,                  !- Name
+!    CoolSys1 Chiller4,       !- Output:Variable or Output:Meter Index Key Name
+!    Chiller Electric Power;  !- Output:Variable or Output:Meter Name
 
 EnergyManagementSystem:Sensor,
     M_ch1,                   !- Name
@@ -32875,6 +32921,11 @@ EnergyManagementSystem:Sensor,
     CoolSys1 Chiller3,       !- Output:Variable or Output:Meter Index Key Name
     Chiller Electric Power;  !- Output:Variable or Output:Meter Name
 
+EnergyManagementSystem:Sensor,
+    P_ch4x,                  !- Name
+    CoolSys1 Chiller4,       !- Output:Variable or Output:Meter Index Key Name
+    Chiller Electric Power;  !- Output:Variable or Output:Meter Name
+
 ! Chilled Cooling Output
 EnergyManagementSystem:Sensor,
     Q_ch1x,                  !- Name
@@ -32889,6 +32940,11 @@ EnergyManagementSystem:Sensor,
 EnergyManagementSystem:Sensor,
     Q_ch3x,                  !- Name
     CoolSys1 Chiller3,       !- Output:Variable or Output:Meter Index Key Name
+    Chiller Evaporator Cooling Rate;  !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+    Q_ch4x,                  !- Name
+    CoolSys1 Chiller4,       !- Output:Variable or Output:Meter Index Key Name
     Chiller Evaporator Cooling Rate;  !- Output:Variable or Output:Meter Name
 
 ! Battery Power
@@ -33116,17 +33172,6 @@ EnergyManagementSystem:Sensor,
     Q_fc_fuel_x,             !- Name
     SOFC,                    !- Output:Variable or Output:Meter Index Key Name
     Generator Fuel HHV Basis Rate;  !- Output:Variable or Output:Meter Name
-
-EnergyManagementSystem:Sensor,
-    ELF,                     !- Name
-    *,                       !- Output:Variable or Output:Meter Index Key Name
-    electricity:facility;    !- Output:Variable or Output:Meter Name
-
-EnergyManagementSystem:Sensor,
-    HWT,                     !- Name
-    HeatSys1 Supply Outlet Node,  !- Output:Variable or Output:Meter Index Key Name
-    System Node Temperature; !- Output:Variable or Output:Meter Name
-
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:ACTUATOR ===========
@@ -33480,8 +33525,6 @@ EnergyManagementSystem:Actuator,
     Schedule Value;          !- Actuated Component Control Type
 
 
-
-
 !-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:PROGRAMCALLINGMANAGER ===========
 
 !    AfterPredictorAfterHVACManagers,  !- EnergyPlus Model Calling Point
@@ -33533,7 +33576,8 @@ EnergyManagementSystem:ProgramCallingManager,
 EnergyManagementSystem:ProgramCallingManager,
     PCM_Dispatch,            !- Name
     InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
-    Dispatch_FuelCell;       !- Program Name 1
+    Dispatch_FuelCell,       !- Program Name 1
+    Dispatch_Microturbine;   !- Program Name 2
 
 EnergyManagementSystem:ProgramCallingManager,
     Batery_Dispatch,         !- Name
@@ -33567,12 +33611,6 @@ EnergyManagementSystem:ProgramCallingManager,
     WasteHeat,               !- Name
     InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
     FuelCellWasteHeat;       !- Program Name 1
-
-EnergyManagementSystem:ProgramCallingManager,
-    PCM_Dispatch2,           !- Name
-    InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
-    Dispatch_Microturbine;   !- Program Name 1
-
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:PROGRAM ===========
@@ -33741,6 +33779,15 @@ EnergyManagementSystem:Program,
 EnergyManagementSystem:Program,
     Dispatch_FuelCell,       !- Name
     SET FuelCell_Dispatch = FC_P*1000;  !- Program Line 1
+
+EnergyManagementSystem:Program,
+    Dispatch_Battery,        !- Name
+    SET Battery_Discharge =Bat_Dis*1000,  !- Program Line 1
+    SET Battery_Charge=Bat_Ch*1000;  !- Program Line 2
+
+EnergyManagementSystem:Program,
+    Dispatch_Microturbine,   !- Name
+    SET Microturbine_Dispatch = Mt_P*1000;  !- Program Line 1
 
 EnergyManagementSystem:Program,
     ResetHourlyEnergy,       !- Name
@@ -33973,7 +34020,6 @@ EnergyManagementSystem:Program,
     SET WasteHeat=WasteHeat*ExhaustEff,  !- A7
     SET FC_Cap_A=WasteHeat/2400000;  !- A8
 
-
 !SET P_Building=(P_Total/1000)-P_ch1-P_Ch2-P_Ch3,
 !SET P_solar=P_solarX/1000,
 EnergyManagementSystem:Program,
@@ -33981,33 +34027,35 @@ EnergyManagementSystem:Program,
     SET P_ch1=P_ch1x/1000,   !- Program Line 1
     SET P_ch2=P_ch2x/1000,   !- Program Line 2
     SET P_ch3=P_ch3x/1000,   !- A4
-    SET Q_ch1=Q_ch1x/1000*0.284345,  !- A5
-    SET Q_ch2=Q_ch2x/1000*0.284345,  !- A6
-    SET Q_ch3=Q_ch3x/1000*0.284345,  !- A7
-    SET G_bp1=G_bp1x*3.414/1000000,  !- A8
-    SET G_bp2=G_bp2x*3.414/1000000,  !- A9
-    SET G_bp3=G_bp3x*3.414/1000000,  !- A10
-    SET G_bp4=G_bp4x*3.414/1000000,  !- A11
-    SET G_bp5=G_bp5x*3.414/1000000,  !- A12
-    SET G_bp6=G_bp6x*3.414/1000000,  !- A13
-    SET Q_b1=Q_b1x*3.414/1000000,  !- A14
-    SET Q_b2=Q_b2x*3.414/1000000,  !- A15
-    SET Q_b3=Q_b3x*3.414/1000000,  !- A16
-    SET P_ac=P_pvX/3600000,  !- A17
-    SET P_mt=P_mtX/1000,     !- A18
-    SET SOC=SOCx/7200000000, !- A19
-    SET T_mt_exhaust=T_mt_exhaustX,  !- A20
-    SET M_mt_fuel = Q_mt_fuel_x/47141000,  !- A21
-    SET M_mt_exhaust = M_mt_exhaustX,  !- A22
-    SET P_fc=P_fcX/1000,     !- A23
-    SET T_fc_amb=T_fc_ambX,  !- A24
-    SET Q_Ab_in=M_gen_ab*4.186*(T_gen_ab_in-T_gen_ab_out)*3.414/1000,  !- A25
-    SET Q_Ab_out=M_Chw_ab*4.186*(T_ChW_ab_in-T_ChW_ab_out)*3.414/1000,  !- A26
-    SET Q_TS_ch=MFR_Ch*4.186*(TS_Ret-TS_Sup)*3.414/1000,  !- A27
-    SET Q_Chw= (M_ChW*4.186*(T_ChW_ret-T_ChW_sup)*3.414/1000)-Q_TS_ch,  !- A28
-    SET Q_HW= (M_HW*4.186*(T_HW_Sup-T_HW_ret)*3.414/1000)-Q_Ab_in,  !- A29
-    SET T_chw_sup_def=6.7,   !- A30
-    SET T_chw_ret_def= 13,   !- A31
+    SET P_ch4=P_ch4x/1000,   !- A5
+    SET Q_ch1=Q_ch1x/1000*0.284345,  !- A6
+    SET Q_ch2=Q_ch2x/1000*0.284345,  !- A7
+    SET Q_ch3=Q_ch3x/1000*0.284345,  !- A8
+    SET Q_ch4=Q_ch4x/1000*0.284345,  !- A9
+    SET G_bp1=G_bp1x*3.414/1000000,  !- A9
+    SET G_bp2=G_bp2x*3.414/1000000,  !- A10
+    SET G_bp3=G_bp3x*3.414/1000000,  !- A11
+    SET G_bp4=G_bp4x*3.414/1000000,  !- A12
+    SET G_bp5=G_bp5x*3.414/1000000,  !- A13
+    SET G_bp6=G_bp6x*3.414/1000000,  !- A14
+    SET Q_b1=Q_b1x*3.414/1000000,  !- A15
+    SET Q_b2=Q_b2x*3.414/1000000,  !- A16
+    SET Q_b3=Q_b3x*3.414/1000000,  !- A17
+    SET P_ac=P_pvX/3600000,  !- A18
+    SET P_mt=P_mtX/1000,     !- A19
+    SET SOC=SOCx/7200000000, !- A20
+    SET T_mt_exhaust=T_mt_exhaustX,  !- A21
+    SET M_mt_fuel = Q_mt_fuel_x/47141000,  !- A22
+    SET M_mt_exhaust = M_mt_exhaustX,  !- A23
+    SET P_fc=P_fcX/1000,     !- A24
+    SET T_fc_amb=T_fc_ambX,  !- A25
+    SET Q_Ab_in=M_gen_ab*4.186*(T_gen_ab_in-T_gen_ab_out)*3.414/1000,  !- A26
+    SET Q_Ab_out=M_Chw_ab*4.186*(T_ChW_ab_in-T_ChW_ab_out)*3.414/1000,  !- A27
+    SET Q_TS_ch=MFR_Ch*4.186*(TS_Ret-TS_Sup)*3.414/1000,  !- A28
+    SET Q_Chw= (M_ChW*4.186*(T_ChW_ret-T_ChW_sup)*3.414/1000)-Q_TS_ch,  !- A29
+    SET Q_HW= (M_HW*4.186*(T_HW_Sup-T_HW_ret)*3.414/1000)-Q_Ab_in,  !- A30
+    SET T_chw_sup_def=6.7,   !- A31
+    SET T_chw_ret_def= 13,   !- A32
     SET SOC_ts1=(T_chw_ret_def-T_water_1)/(T_chw_ret_def-T_chw_sup_def)/10,  !- A32
     SET SOC_ts1= @max SOC_ts1 0,  !- A33
     SET SOC_ts2=(T_chw_ret_def-T_water_2)/(T_chw_ret_def-T_chw_sup_def)/10,  !- A34
@@ -34051,20 +34099,6 @@ EnergyManagementSystem:Program,
     SET M_fc_fuel = Q_fc_fuel_x/47141000;  !- A72
 
 EnergyManagementSystem:Program,
-    Dispatch_Battery,        !- Name
-    IF (SOC<0.2),            !- Program Line 1
-    SET Battery_Discharge= 0,!- Program Line 2
-    ELSEIF (SOC<0.45),       !- A4
-    SET Battery_Discharge =@min Bat_Dis*1000 (SOC-0.2)*2000000,  !- A5
-    ELSE,                    !- A6
-    SET Battery_Discharge =Bat_Dis*1000,  !- A7
-    ENDIF,                   !- A8
-    SET Battery_Charge=Bat_Ch*1000,  !- A9
-    If (hour>=2) && (hour<=6) && (SOC<0.8),  !- A10
-    SET Battery_Charge= 250000,  !- A11
-    Endif;                   !- A12
-
-EnergyManagementSystem:Program,
     FuelCell_Tracking,       !- Name
     SET timestep=6,          !- Program Line 1
     IF P_fcX>0 && P_fc_1==0, !- Program Line 2
@@ -34076,20 +34110,6 @@ EnergyManagementSystem:Program,
     IF P_fcX>0,              !- A9
     SET FC_hours=FC_hours_1+1/timestep,  !- A10
     ENDIF;                   !- A11
-
-EnergyManagementSystem:Program,
-    Dispatch_Microturbine,   !- Name
-    SET Generators = (FuelCell_Dispatch/1000)+(Battery_Discharge/1000)+Mt_P,  !- Program Line 1
-    SET Timestep=6,          !- Program Line 2
-    SET El_Bldg = ELF/3600000*Timestep,  !- A4
-    If Generators>(El_Bldg+(Battery_Charge/1000)),  !- A5
-    SET Microturbine_Dispatch= (El_Bldg*1000)+Battery_Charge-Battery_Discharge-FuelCell_Dispatch,  !- A6
-    SET Microturbine_Dispatch= @max Microturbine_Dispatch 0,  !- A7
-    ELSE ,                   !- A8
-    SET Microturbine_Dispatch= Mt_P*1000,  !- A9
-    ENDIF;                   !- A10
-
-
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:GLOBALVARIABLE ===========
@@ -34119,9 +34139,7 @@ EnergyManagementSystem:GlobalVariable,
     EtRated,                 !- Erl Variable 3 Name
     PLRx,                    !- A4
     Ecx,                     !- A5
-    SOC,                     !- A6
-    SkinLossRate,            !- A7
-    Count;                   !- A8
+    SkinLossRate;            !- A6
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:OUTPUTVARIABLE ===========
@@ -34519,55 +34537,6 @@ EnergyManagementSystem:OutputVariable,
     SystemTimestep,          !- Update Frequency
     VOLTTRON_Sensors;        !- EMS Program or Subroutine Name
 
-EnergyManagementSystem:OutputVariable,
-    El_Bldg,                 !- Name
-    El_Bldg,                 !- EMS Variable Name
-    Averaged,                !- Type of Data in Variable
-    SystemTimestep,          !- Update Frequency
-    dispatch_microturbine;   !- EMS Program or Subroutine Name
-
-EnergyManagementSystem:OutputVariable,
-    fuelcell_dispatch,       !- Name
-    fuelcell_dispatch,       !- EMS Variable Name
-    Averaged,                !- Type of Data in Variable
-    SystemTimestep,          !- Update Frequency
-    dispatch_microturbine;   !- EMS Program or Subroutine Name
-
-EnergyManagementSystem:OutputVariable,
-    battery_charge,          !- Name
-    battery_charge,          !- EMS Variable Name
-    Averaged,                !- Type of Data in Variable
-    SystemTimestep,          !- Update Frequency
-    dispatch_microturbine;   !- EMS Program or Subroutine Name
-
-EnergyManagementSystem:OutputVariable,
-    battery_discharge,       !- Name
-    battery_discharge,       !- EMS Variable Name
-    Averaged,                !- Type of Data in Variable
-    SystemTimestep,          !- Update Frequency
-    dispatch_microturbine;   !- EMS Program or Subroutine Name
-
-EnergyManagementSystem:OutputVariable,
-    Mt_P,                    !- Name
-    Mt_P,                    !- EMS Variable Name
-    Averaged,                !- Type of Data in Variable
-    SystemTimestep,          !- Update Frequency
-    dispatch_microturbine;   !- EMS Program or Subroutine Name
-
-EnergyManagementSystem:OutputVariable,
-    Generators,              !- Name
-    Generators,              !- EMS Variable Name
-    Averaged,                !- Type of Data in Variable
-    SystemTimestep,          !- Update Frequency
-    dispatch_microturbine;   !- EMS Program or Subroutine Name
-
-EnergyManagementSystem:OutputVariable,
-    microturbine_dispatch,   !- Name
-    microturbine_dispatch,   !- EMS Variable Name
-    Averaged,                !- Type of Data in Variable
-    SystemTimestep,          !- Update Frequency
-    dispatch_microturbine;   !- EMS Program or Subroutine Name
-
 
 !-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:INTERNALVARIABLE ===========
 
@@ -34599,13 +34568,6 @@ EnergyManagementSystem:InternalVariable,
     LABS_FanDesignMass,      !- Name
     VAV_LABS_Fan,            !- Internal Data Index Key Name
     Fan Maximum Mass Flow Rate;  !- Internal Data Type
-
-!-   ===========  ALL OBJECTS IN CLASS: EXTERNALINTERFACE ===========
-
-ExternalInterface,
-    PtolemyServer;           !- Name of External Interface
-
-
 !-   ===========  ALL OBJECTS IN CLASS: EXTERNALINTERFACE:SCHEDULE ===========
 
 ExternalInterface:Schedule,
@@ -34622,6 +34584,11 @@ ExternalInterface:Schedule,
     Ch3_D,                   !- Name
     Any Number,              !- Schedule Type Limits Name
     1;                       !- Initial Value
+    
+ExternalInterface:Schedule,
+    Ch4_D,                   !- Name
+    Any Number,              !- Schedule Type Limits Name
+    1;                       !- Initial Value
 
 ExternalInterface:Schedule,
     Ab_D,                    !- Name
@@ -34634,45 +34601,40 @@ ExternalInterface:Schedule,
     1;                       !- Initial Value
 
 ExternalInterface:Schedule,
-    B2_D,                    !- Name
-    Any Number,              !- Schedule Type Limits Name
-    0;                       !- Initial Value
-
-ExternalInterface:Schedule,
-    B3_D,                    !- Name
-    Any Number,              !- Schedule Type Limits Name
-    0;                       !- Initial Value
-
-ExternalInterface:Schedule,
     Mt_P,                    !- Name
     Any Number,              !- Schedule Type Limits Name
     0;                       !- Initial Value
 
-ExternalInterface:Schedule,
-    FC_P,                    !- Name
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:FILE ===========
+Schedule:File,
+    Electricity_Price,       !- Name
     Any Number,              !- Schedule Type Limits Name
-    0;                       !- Initial Value
+    ScenarioA_Dispatch_Base1_LA.csv,  !- File Name
+    16,                      !- Column Number
+    1,                       !- Rows to Skip at Top
+    8760,                    !- Number of Hours of Data
+    Comma,                   !- Column Separator
+    No;                      !- Interpolate to Timestep
 
-ExternalInterface:Schedule,
-    TS_C,                    !- Name
+Schedule:File,
+    NaturalGas_Price,        !- Name
     Any Number,              !- Schedule Type Limits Name
-    0;                       !- Initial Value
+    ScenarioA_Dispatch_Base1_LA.csv,  !- File Name
+    17,                      !- Column Number
+    1,                       !- Rows to Skip at Top
+    8760,                    !- Number of Hours of Data
+    Comma,                   !- Column Separator
+    No;                      !- Interpolate to Timestep
 
-ExternalInterface:Schedule,
-    TS_D,                    !- Name
+Schedule:File,
+    RTP Schedule,            !- Name
     Any Number,              !- Schedule Type Limits Name
-    0;                       !- Initial Value
-
-ExternalInterface:Schedule,
-    Bat_Ch,                  !- Name
-    Any Number,              !- Schedule Type Limits Name
-    0;                       !- Initial Value
-
-ExternalInterface:Schedule,
-    Bat_Dis,                 !- Name
-    Any Number,              !- Schedule Type Limits Name
-    0;                       !- Initial Value
-
+    ScenarioA_Dispatch_Base1_LA.csv,  !- File Name
+    16,                      !- Column Number
+    1,                       !- Rows to Skip at Top
+    8760,                    !- Number of Hours of Data
+    Comma,                   !- Column Separator
+    No;                      !- Interpolate to Timestep
 
 !-   ===========  ALL OBJECTS IN CLASS: AVAILABILITYMANAGER:NIGHTCYCLE ===========
 
@@ -35461,7 +35423,7 @@ Generator:FuelCell:PowerModule,
     Normalized,              !- Efficiency Curve Mode
     FTC Power Curve,         !- Efficiency Curve Name
     0.45,                    !- Nominal Efficiency
-    600000,                  !- Nominal Electrical Power {W}
+    0.5,                     !- Nominal Electrical Power {W}
     0,                       !- Number of Stops at Start of Simulation
     0,                       !- Cycling Performance Degradation Coefficient
     0,                       !- Number of Run Hours at Beginning of Simulation {hr}
@@ -35484,12 +35446,12 @@ Generator:FuelCell:PowerModule,
     0,                       !- Constant Skin Loss Rate {W}
     ,                        !- Skin Loss U-Factor Times Area Term {W/K}
     ,                        !- Skin Loss Quadratic Curve Name
-    1.5,                     !- Dilution Air Flow Rate {kmol/s}
+    0.00001,                 !- Dilution Air Flow Rate {kmol/s}
     ,                        !- Stack Heat loss to Dilution Air {W}
     SOFC AIR HR Inlet,       !- Dilution Inlet Air Node Name
     SOFFC Air HR Outlet,     !- Dilution Outlet Air Node Name
-    150000,                  !- Minimum Operating Point {W}
-    600000;                  !- Maximum Operating Point {W}
+    0.25,                    !- Minimum Operating Point {W}
+    0.5;                     !- Maximum Operating Point {W}
 
 
 !-   ===========  ALL OBJECTS IN CLASS: GENERATOR:FUELCELL:AIRSUPPLY ===========
@@ -35668,10 +35630,10 @@ ElectricLoadCenter:Storage:Simple,
     0.5,                     !- Radiative Fraction for Zone Heat Gains
     0.93,                    !- Nominal Energetic Efficiency for Charging
     0.97,                    !- Nominal Discharging Energetic Efficiency
-    7200000000,              !- Maximum Storage Capacity {J}
-    500000,                  !- Maximum Power for Discharging {W}
-    500000,                  !- Maximum Power for Charging {W}
-    3600000000;              !- Initial State of Charge {J}
+    1,                       !- Maximum Storage Capacity {J}
+    1,                       !- Maximum Power for Discharging {W}
+    1,                       !- Maximum Power for Charging {W}
+    1;                       !- Initial State of Charge {J}
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ELECTRICLOADCENTER:DISTRIBUTION ===========
@@ -36486,8 +36448,8 @@ WaterUse:Connections,
 
 Curve:Quadratic,
     Capstone C65 HeatRecoveryRate_vs_PLR,  !- Name
-    0.0,                     !- Coefficient1 Constant
-    1.0,                     !- Coefficient2 x
+    1,                     !- Coefficient1 Constant
+    0,                     !- Coefficient2 x
     0.0,                     !- Coefficient3 x**2
     0.03,                    !- Minimum Value of x
     1.0;                     !- Maximum Value of x
@@ -38130,6 +38092,231 @@ OutputControl:Table:Style,
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:VARIABLE ===========
 
 Output:Variable,
+    *,                       !- Key Value
+    P_Ch1,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    P_Ch2,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    P_Ch3,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_ch1,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_ch2,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_ch3,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    TW1,                     !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    TW2,                     !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    TW3,                     !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    TW4,                     !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    TW5,                     !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    TW6,                     !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    TW7,                     !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    TW8,                     !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    TW9,                     !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    TW10,                    !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    P_Bat,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    SOC,                     !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    P_mt,                    !- Variable Name
+    Schedule Value;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    T_mt_exhaust,            !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    M_mt_fuel,               !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    M_mt_exhaust,            !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    P_fc,                    !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    T_fc_amb,                !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    FC_hours,                !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    FC_starts,               !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    G_bp1,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    G_bp2,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    G_bp3,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_b1,                    !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_b2,                    !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_b3,                    !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_ab_in,                 !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_ab_out,                !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_ChW,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_HW,                    !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    SOC_ts,                  !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    T_OA,                    !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    CurrentMonthV,           !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    CurrentDayOfMonthV,      !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    CurrentHourV,            !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    CurrentMinuteV,          !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_TSC,                   !- Variable Name
+    hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Q_TSD,                   !- Variable Name
+    Hourly;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    M_fc_fuel,               !- Variable Name
+    Hourly;                !- Reporting Frequency
+
+Output:Variable,
     Electricity_Price,            !- Key Value
     schedule value,          !- Variable Name
     Hourly;                  !- Reporting Frequency
@@ -38137,46 +38324,6 @@ Output:Variable,
 Output:Variable,
     *,                       !- Key Value
     Site Outdoor Air Drybulb Temperature,  !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    electricity:facility,    !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    El_bldg,                 !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    fuelcell_Dispatch,       !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Battery_Charge,          !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Battery_Discharge,       !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Mt_P,                    !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Generators,              !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Microturbine_Dispatch,   !- Variable Name
     Hourly;                  !- Reporting Frequency
 
 
@@ -38405,39 +38552,32 @@ Output:Meter,
     Gas:Facility,            !- Name
     Hourly;                  !- Reporting Frequency
 
-!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:FILE ===========
-Schedule:File,
-    Electricity_Price,       !- Name
-    Any Number,              !- Schedule Type Limits Name
-    ScenarioC_Dispatch_Base1_LA.csv,  !- File Name
-    16,                      !- Column Number
-    1,                       !- Rows to Skip at Top
-    8760,                    !- Number of Hours of Data
-    Comma,                   !- Column Separator
-    No;                      !- Interpolate to Timestep
+	EnergyManagementSystem:Sensor,
+    ELF,                     !- Name
+    *,                       !- Output:Variable or Output:Meter Index Key Name
+    electricity:facility;    !- Output:Variable or Output:Meter Name
 
-Schedule:File,
-    NaturalGas_Price,        !- Name
-    Any Number,              !- Schedule Type Limits Name
-    ScenarioC_Dispatch_Base1_LA.csv,  !- File Name
-    17,                      !- Column Number
-    1,                       !- Rows to Skip at Top
-    8760,                    !- Number of Hours of Data
-    Comma,                   !- Column Separator
-    No;                      !- Interpolate to Timestep
+EnergyManagementSystem:Sensor,
+    HWT,                     !- Name
+    HeatSys1 Supply Outlet Node,  !- Output:Variable or Output:Meter Index Key Name
+    System Node Temperature; !- Output:Variable or Output:Meter Name
+	
+	Output:Variable,
+    *,                       !- Key Value
+    Facility Total Purchased Electric Power,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
 
-Schedule:File,
-    RTP Schedule,            !- Name
-    Any Number,              !- Schedule Type Limits Name
-    ScenarioC_Dispatch_Base1_LA.csv,  !- File Name
-    16,                      !- Column Number
-    1,                       !- Rows to Skip at Top
-    8760,                    !- Number of Hours of Data
-    Comma,                   !- Column Separator
-    No;                      !- Interpolate to Timestep
+Output:Variable,
+    *,                       !- Key Value
+    Facility Total Surplus Electric Power,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Facility Total Produced Electric Power,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
 	
-	
-	Schedule:Constant,
+		Schedule:Constant,
     M_ab,                    !- Name
     Fraction,                !- Schedule Type Limits Name
     1;                       !- Hourly Value
@@ -38638,3 +38778,7 @@ EnergyManagementSystem:Actuator,
     Start_Up_Costs,          !- Key Value
     Schedule Value,          !- Variable Name
     Annual;                  !- Reporting Frequency
+
+ExternalInterface,
+    PtolemyServer;           !- Name of External Interface
+
